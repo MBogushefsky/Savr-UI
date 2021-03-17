@@ -1,0 +1,18 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <ion-grid class="login-input-area">
+      <ion-row>
+        <ion-col><ion-input [value]="username" (keyup.enter)="onLogin()" (input)="onUsernameChange($event)" class="login-input" type="text" placeholder="Username"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input [value]="password" (keyup.enter)="onLogin()" (input)="onPasswordChange($event)" class="login-input" type="password" placeholder="Password"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-button (click)="onLogin()" class="login-input" color="primary">Login</ion-button></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-button (click)="onSignUp()" class="login-input" color="secondary">Sign Up</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

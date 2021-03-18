@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor(private router: Router, private storage: Storage, private globals: Globals) {
+  constructor(public router: Router, private storage: Storage, public globals: Globals) {
     this.tokenCheck = setInterval(() => {
       this.storage.get('CurrentUser').then((user) => {
         this.checkUserAndRedirect(user);

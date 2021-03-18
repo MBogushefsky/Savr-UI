@@ -1,20 +1,20 @@
 export class PlaidAccount {
-    private Id: string;
-    private userId: string;
-    private accountId: string;
-    private name: string;
-    private type: string;
-    private subType: string;
-    private availableBalance: number;
-    private currentBalance: number;
+    public Id: string;
+    public userId: string;
+    public accountId: string;
+    public name: string;
+    public type: string;
+    public subType: string;
+    public availableBalance: number;
+    public currentBalance: number;
 }
 
 export class PlaidTransaction {
-    private Id: string;
-    private userId: string;
-    private accountId: string;
-    private amount: number;
-    private merchantName: string;
-    private name: string;
-    private date: Date;
+    public Id: string;
+    public userId: string;
+    public accountId: string;
+    public amount: number;
+    public merchantName: string;
+    public name: string;
+    public date: Date;
 }

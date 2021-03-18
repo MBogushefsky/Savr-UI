@@ -34,8 +34,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     onExit: this.onPlaidExit
   };
 
-  private plaidAccounts: PlaidAccount[] = [];
-  private plaidTransactionsDict: { [id: string]: PlaidTransaction[] } = {};
+  public plaidAccounts: PlaidAccount[] = [];
+  public plaidTransactionsDict: { [id: string]: PlaidTransaction[] } = {};
 
   constructor(private globals: Globals, 
     private plaidLinkService: NgxPlaidLinkService,

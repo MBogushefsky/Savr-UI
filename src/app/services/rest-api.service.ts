@@ -70,6 +70,10 @@ export class RestApiService {
     return this.http.get<any>(this.apiHost + "/api/ebay/products?keyword=" + keyword);
   }
 
+  getBlueCartProductsByKeyword(keyword: string) {
+    return this.http.get<any>(this.apiHost + "/api/blue-cart/products?keyword=" + keyword);
+  }
+
   getIntradayOfStockSymbol(symbol: string) {
     return this.http.get<any>(this.apiHost + "/api/investments/stocks/" + symbol);
   }

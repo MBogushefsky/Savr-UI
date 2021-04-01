@@ -13,9 +13,11 @@ export class ShoppingComponent implements OnInit {
   searchInput: string;
   amazonSearchResults: any[] = [];
   ebaySearchResults: any[] = [];
+  walmartSearchResults: any[] = [];
 
   loadingAmazonSearch: boolean = false;
   loadingEbaySearch: boolean = false;
+  loadingWalmartSearch: boolean = false;
 
   constructor(private restApiService: RestApiService, private rainForestService: RainForestService) { }
 
@@ -73,5 +75,27 @@ export class ShoppingComponent implements OnInit {
         this.loadingEbaySearch = false;
       }
     );
+
+    this.loadingWalmartSearch = true;
+    this.restApiService.getBlueCartProductsByKeyword(this.searchInput).subscribe(
+      (returnedWalmartProducts: any) => {
+        this.walmartSearchResults = [];
+        returnedWalmartProducts.search_results.forEach(
+          (result) => {
+            let resultProduct: Product = {
+              title: result.product.title,
+              imageSrc: result.product.primary_image,
+              price: result.offers.primary.price,
+              priceRaw: '$' + result.offers.primary.price,
+              link: result.product.link,
+              platform: 'Walmart'
+            };
+            this.walmartSearchResults.push(resultProduct);
+          }
+        )
+        this.loadingWalmartSearch = false;
+      }
+    );
+    
   }
 }

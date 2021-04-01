@@ -1,6 +1,6 @@
 <ion-app>
   <ng-container *ngIf="globals.appLoaded">
-    <ion-split-pane contentId="main-content" *ngIf="router.url !== '/login' && this.globals.getCurrentUser() != null">
+    <ion-split-pane contentId="main-content" when="(min-width: 2000px)" *ngIf="router.url !== '/login' && this.globals.getCurrentUser() != null">
       <ion-menu contentId="main-content" class="menu-content" type="overlay">
         <ion-content>
           <ion-list id="main-list" class="menu-list">

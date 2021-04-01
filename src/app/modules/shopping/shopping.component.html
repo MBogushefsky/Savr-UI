@@ -24,12 +24,12 @@
                 <ion-input (input)="setSearchInput($event)" [clearInput]="true" (keyup.enter)="searchForProducts()" placeholder="Search..."></ion-input>
               </ion-col>
               <ion-col size="1">
-                <ng-container *ngIf="!loadingAmazonSearch && !loadingEbaySearch">
+                <ng-container *ngIf="!loadingAmazonSearch && !loadingEbaySearch && !loadingWalmartSearch">
                   <ion-button (click)="searchForProducts()" class="search-button">
                     <span>Go</span>
                   </ion-button>
                 </ng-container>
-                <ng-container *ngIf="loadingAmazonSearch || loadingEbaySearch">
+                <ng-container *ngIf="loadingAmazonSearch || loadingEbaySearch || loadingWalmartSearch">
                   <ion-button [disabled]="true" class="search-button">
                     <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
                   </ion-button>
@@ -42,9 +42,9 @@
     </ion-card>
     <ion-grid>
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="4">
           <ion-card>
-            <ion-card-header>
+            <ion-card-header class="store-card-header">
               <ion-card-title class="flex-align-center">
                 <img class="products-title-icon-image" src="assets/amazon-icon.png" />
               </ion-card-title>
@@ -70,7 +70,7 @@
                   </ion-grid>
                 </ion-card-header>
                 <ion-card-content class="flex-align-center">
-                  <ion-button class="go-to-product-button" [href]="result.link">
+                  <ion-button class="go-to-product-button" target="_blank" [href]="result.link">
                     <span>Go To Page</span>
                     <img class="product-icon-image" src="assets/amazon-icon.png" />
                   </ion-button>
@@ -84,9 +84,9 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="4">
           <ion-card>
-            <ion-card-header>
+            <ion-card-header class="store-card-header">
               <ion-card-title class="flex-align-center">
                 <img class="products-title-icon-image" src="assets/ebay-icon.png" />
               </ion-card-title>
@@ -112,7 +112,7 @@
                   </ion-grid>
                 </ion-card-header>
                 <ion-card-content class="flex-align-center">
-                  <ion-button class="go-to-product-button" href="https://www.ebay.com/itm/Apple-iPhone-7-Plus-32GB-Black-Unlocked-A1661/284240350435?epid=232834228&hash=item422e0b8ce3:g:aq0AAOSw3MlgZMuq&mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5338658830&customid=&toolid=10001&mkevt=1"><!--[href]="result.link">-->
+                  <ion-button class="go-to-product-button" target="_blank" [href]="result.link">
                     <span>Go To Page</span>
                     <img class="product-icon-image" src="assets/ebay-icon.png" />
                   </ion-button>
@@ -120,6 +120,48 @@
               </ion-card>
             </ion-card-content>
             <ion-card-content *ngIf="loadingEbaySearch">
+              <div class="flex-align-center">
+                <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="4">
+          <ion-card>
+            <ion-card-header class="store-card-header">
+              <ion-card-title class="flex-align-center">
+                <img class="products-title-icon-image walmart-icon-image" src="assets/walmart-icon.png" />
+              </ion-card-title>
+            </ion-card-header>
+            <ion-item-divider class="product-search-divider"></ion-item-divider>
+            <ion-card-content class="no-padding" *ngIf="!loadingWalmartSearch && walmartSearchResults.length > 0">
+              <ion-card *ngFor="let result of walmartSearchResults">
+                <ion-card-header>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="2">
+                        <img class="product-image" [src]="result.imageSrc" />
+                      </ion-col>
+                      <ion-col size="10">
+                        <ion-card-title>
+                          {{ result.title }}
+                        </ion-card-title>
+                        <ion-card-subtitle>
+                          <ion-badge color="success">{{ result.price | currency }}</ion-badge>
+                        </ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-card-header>
+                <ion-card-content class="flex-align-center">
+                  <ion-button class="go-to-product-button" target="_blank" [href]="result.link">
+                    <span>Go To Page</span>
+                    <img class="product-icon-image walmart-icon-image" src="assets/walmart-icon.png" />
+                  </ion-button>
+                </ion-card-content>
+              </ion-card>
+            </ion-card-content>
+            <ion-card-content *ngIf="loadingWalmartSearch">
               <div class="flex-align-center">
                 <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
               </div>

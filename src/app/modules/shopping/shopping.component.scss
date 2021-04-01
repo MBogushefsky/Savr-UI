@@ -24,6 +24,13 @@
     margin-left: 0.5rem;
 }
 
+.store-card-header {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .product-search-divider {
     margin-top: -2rem;
 }
@@ -34,4 +41,8 @@
     background-color: white;
     border-radius: 0.5rem;
     margin-left: 0.25rem;
+}
+
+.walmart-icon-image {
+    width: 5rem;
 }

@@ -1,8 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Globals } from 'src/app/globals';
 import { User } from 'src/app/models/user';
+import { FoundationService } from 'src/app/services/foundation.service';
+import { EncryptionService } from 'src/app/services/encryption.service';
 import { RestApiService } from 'src/app/services/rest-api.service';
 
 @Component({
@@ -17,7 +20,9 @@ export class LoginComponent implements OnInit {
   constructor(private restApiService: RestApiService, 
     private storage: Storage, 
     private router: Router,
-    private globals: Globals) { }
+    private globals: Globals,
+    private encryptionService: EncryptionService,
+    private foundationService: FoundationService) { }
 
   ngOnInit() {}
 
@@ -30,10 +35,10 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.restApiService.login(this.username, this.password).subscribe(
+    this.restApiService.login(this.username, this.encryptionService.encrypt(this.password)).subscribe(
       (returnedUser: User) => {
         this.storage.set("CurrentUser", JSON.stringify(returnedUser));
-        this.globals.currentUser = returnedUser;
+        this.globals.setCurrentUser(returnedUser);
         this.router.navigate(['/home']);
       }
     );
@@ -42,5 +47,4 @@ export class LoginComponent implements OnInit {
   onSignUp() {
 
   }
-
 }

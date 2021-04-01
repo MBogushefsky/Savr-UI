@@ -1,5 +1,7 @@
 {
   "name": "Savr",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

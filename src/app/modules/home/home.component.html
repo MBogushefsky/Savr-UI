@@ -15,46 +15,17 @@
   </ion-header>
 
   <div id="container">
-    <ng-container *ngIf="plaidAccounts.length > 0">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Bank Accounts</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-card *ngFor="let plaidAccount of plaidAccounts">
-            <ion-card-header>
-              <ion-card-title>{{ plaidAccount.name }}</ion-card-title>
-              <ion-card-subtitle class="currency">{{ plaidAccount.availableBalance | currency }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ng-container *ngIf="plaidTransactionsDict[plaidAccount.accountId] != null">
-                <ion-card *ngFor="let plaidTransaction of plaidTransactionsDict[plaidAccount.accountId]">
-                  <ion-card-header>
-                    <ion-card-title *ngIf="plaidTransaction.merchantName != null">
-                      {{ plaidTransaction.merchantName }} ({{ plaidTransaction.name }})
-                    </ion-card-title>
-                    <ion-card-title *ngIf="plaidTransaction.merchantName == null">
-                      {{ plaidTransaction.name }}
-                    </ion-card-title>
-                    <ion-card-subtitle>{{ plaidTransaction.date | date:'fullDate' }}</ion-card-subtitle>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <div>
-                      <h1 class="currency" [ngClass]="(plaidTransaction.amount > 0) ? 'positive-amount' : 'negative-amount'">
-                        {{ plaidTransaction.amount | currency }}
-                      </h1>
-                    </div>
-                  </ion-card-content>
-                </ion-card>
-              </ng-container>
-              <ion-button (click)="loadTransactionsForAccount(plaidAccount.accountId)">Load Transactions</ion-button>
-            </ion-card-content>
-          </ion-card>
-        </ion-card-content>
-      </ion-card>
-    </ng-container>
-    <ng-container *ngIf="plaidAccounts.length === 0">
-      <ion-button expand="full" (click)="onPlaidClick()">Link Bank Account</ion-button>
-    </ng-container>
+    <ion-card>
+      <ion-card-content class="flex-align-center">
+        <div class="chart-area">
+          <div>
+            <ion-title>
+              Available Funds (Past 30 Days)
+            </ion-title>
+          </div>
+          <canvas id="data-chart"></canvas>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

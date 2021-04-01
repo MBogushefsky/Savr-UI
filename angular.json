@@ -33,9 +33,17 @@
             ],
             "styles": [
               "src/theme/variables.scss", 
-              "src/global.scss"
+              "src/global.scss",
+              {
+                "input": "node_modules/@fortawesome/fontawesome-free/css/all.css"
+              }
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.bundle.min.js",
+              {
+                "input": "node_modules/@fortawesome/fontawesome-free/js/all.js"
+              }
+            ]
           },
           "configurations": {
             "production": {

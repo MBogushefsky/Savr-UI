@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Globals } from './globals';
 import { User } from './models/user';
+import { TokenCheckService } from './services/token-check.service';
 
 @Component({
   selector: 'app-root',
@@ -10,53 +11,39 @@ import { User } from './models/user';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+
   public tokenCheck;
   public appLoading: boolean = true;
 
   public appPages = [
-    { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
+    { title: 'Home', url: '/home', icon: 'home', section: 0 },
+    { title: 'Funds', url: '/funds', icon: 'cash', section: 0 },
+    { title: 'Budget', url: '/budget', icon: 'restaurant', section: 0 },
+    { title: 'Investments', url: '/investments', icon: 'trending-up', section: 0 },
+    { title: 'Smart-Shopping', url: '/shopping', icon: 'card', section: 0 },    
+    { title: 'Deals', url: '/deals', icon: 'pricetag', section: 0 },    
+    { title: 'Settings', url: '/settings', icon: 'settings', section: 1 }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor(public router: Router, private storage: Storage, public globals: Globals) {
+  //public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  constructor(public router: Router, private storage: Storage, public globals: Globals, private tokenCheckService: TokenCheckService) {
     this.tokenCheck = setInterval(() => {
       this.storage.get('CurrentUser').then((user) => {
-        this.checkUserAndRedirect(user);
+        this.tokenCheckService.checkUserAndRedirect(user);
       });
     }, 2000);
     this.storage.get('CurrentUser').then((user) => {
-      this.checkUserAndRedirect(user);
-      this.appLoading = false;
-      this.router.navigate(['/home']);
+      this.globals.setCurrentUser(JSON.parse(user));
+      this.globals.appLoaded = true;
     });
   }
 
   ngOnInit() {
   }
 
-  checkUserAndRedirect(user: string) {
-    if (user == null) {
-      this.globals.currentUser = null;
-      if (this.router.url !== '/login') {
-        this.router.navigate(['/login']);
-      }
-    }
-    else {
-      this.globals.currentUser = JSON.parse(user);
-      if (this.router.url === 'login') {
-        this.router.navigate(['/home'])
-      }
-    }
-  }
-
   onLogout() {
     this.storage.remove('CurrentUser').then(
       () => {
-        this.globals.currentUser = null;
+        this.globals.setCurrentUser(JSON.parse(null));
         this.router.navigate(['/login']);
       }
     )

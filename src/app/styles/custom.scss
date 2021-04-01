@@ -1,3 +1,67 @@
+/*:root {
+  --modal-header-height: var(--height) * 0.1;
+}*/
+
+ion-content {
+  --background: url("/assets/background.png");
+}
+
+ion-backdrop {
+  cursor: default;
+}
+
+ion-item-divider ion-label {
+  font-weight: bold;
+  color: black !important;
+}
+
+ion-list.clickable-list ion-item {
+  --inner-padding-start: calc(16px + var(--ion-safe-area-left, 0px));
+  --padding-start: 0;
+}
+
+ion-chip ion-label {
+  overflow: visible !important;
+}
+
+.modal-container {
+  --background: white;
+  --width: 50%;
+  --height: 80%;
+}
+
+.modal-container ion-content {
+  --background: none;
+}
+
+.modal-content ion-list ion-item:last-child {
+  --border-style: none;
+}
+
+ion-card-content ion-item:last-child {
+  --border-style: none;
+}
+
+.small-logo-icon {
+  width: 3rem;
+}
+
+.fixed-divider {
+  margin-top: -2rem;
+}
+
+.positive-currency-amount {
+  color: green;
+}
+
+.negative-currency-amount {
+  color: red;
+}
+
+ion-button {
+  --border-radius: 0.5rem;
+}
+
 ion-spinner {
   position: absolute;
   left: 50%;
@@ -10,4 +74,27 @@ ion-spinner {
 
 .bold-text {
   font-weight: bold;
+}
+
+.flex-align-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-side-to-side-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.lifted-divider {
+  margin-top: -2rem;
+}
+
+.plaid-institution-logo {
+  width: 15rem;
 }

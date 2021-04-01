@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import * as Chart from 'chart.js';
+import * as moment from 'moment';
 import {
   PlaidErrorMetadata,
   PlaidErrorObject,
@@ -13,6 +15,7 @@ import {
 } from "ngx-plaid-link";
 import { Globals } from 'src/app/globals';
 import { PlaidAccount, PlaidTransaction } from 'src/app/models/plaid';
+import { FoundationService } from 'src/app/services/foundation.service';
 import { RestApiService } from 'src/app/services/rest-api.service';
 
 @Component({
@@ -20,82 +23,107 @@ import { RestApiService } from 'src/app/services/rest-api.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, AfterViewInit {
-  private plaidLinkHandler: PlaidLinkHandler;
-  private plaidConfig: PlaidConfig = {
-    apiVersion: "v2",
-    env: "development",
-    selectAccount: false,
-    token: null,
-    product: ["auth"],
-    countryCodes: ['US', 'CA', 'GB'],
-    key: "ce84441114a95a4795f66b9bddb36f",
-    onSuccess: this.onPlaidSuccess,
-    onExit: this.onPlaidExit
-  };
-
+export class HomeComponent implements OnInit {
+  
   public plaidAccounts: PlaidAccount[] = [];
-  public plaidTransactionsDict: { [id: string]: PlaidTransaction[] } = {};
+  public plaidAccountsTotalBalance: number = 0;
+  public plaidTransactions: PlaidTransaction[] = [];
 
   constructor(private globals: Globals, 
-    private plaidLinkService: NgxPlaidLinkService,
-    private restApiService: RestApiService) { 
+    private restApiService: RestApiService,
+    private foundationService: FoundationService) { 
 
   }
 
   ngOnInit() {
     this.restApiService.getAccounts().subscribe(
       (returnedAccounts: PlaidAccount[]) => {
+        this.foundationService.randomDataValuesIfPresentationMode('PlaidAccount', returnedAccounts);
         this.plaidAccounts = returnedAccounts;
+        let accountTransactionsLoadCounter = this.plaidAccounts.length;
+        for (let account of this.plaidAccounts) {
+          this.plaidAccountsTotalBalance += account.availableBalance;
+          this.restApiService.getTransactionsByAccountId(account.accountId).subscribe(
+            (returnedTransactions: PlaidTransaction[]) => {
+              this.foundationService.randomDataValuesIfPresentationMode('PlaidTransaction', returnedTransactions);
+              accountTransactionsLoadCounter--;
+              this.plaidTransactions = this.plaidTransactions.concat(returnedTransactions);
+              if (accountTransactionsLoadCounter === 0) {
+                let dataDict: Map<string, number> = new Map();
+                let previousTransactionsAccumulatingSum = this.plaidAccountsTotalBalance;
+                for (let i = 0; i < 30; i++) {
+                  let dateToCheck = moment().subtract(i, "days").format("YYYY-MM-DD");
+                  let previousTransactionsSum = 0;
+                  this.plaidTransactions.forEach((transaction) => {
+                    if (transaction.date === dateToCheck) {
+                      previousTransactionsSum += transaction.amount;
+                    }
+                  });
+                  previousTransactionsAccumulatingSum -= previousTransactionsSum;
+                  if (i === 0) {
+                    dataDict.set(dateToCheck, this.plaidAccountsTotalBalance)
+                  }
+                  else {
+                    dataDict.set(dateToCheck, previousTransactionsAccumulatingSum);
+                  }
+                }
+                this.loadAvailableFundsLineChart(dataDict);
+              }
+            }
+          );
+        }
       }
     );
+    
   }
 
-  ngAfterViewInit() {
-  }
-
-  loadTransactionsForAccount(accountId: string) {
-    this.restApiService.getTransactionsByAccountId(accountId).subscribe(
-      (returnedTransactions: PlaidTransaction[]) => {
-        this.plaidTransactionsDict[accountId] = returnedTransactions;
+  loadAvailableFundsLineChart(dataMap: Map<string, number>) {
+    var availableFundsLineChart = new Chart('data-chart', {
+      type: 'line',
+      data: {
+        labels: Array.from(dataMap.keys()).reverse().map(
+          (dateKey) => {
+            if (dateKey === moment().format("YYYY-MM-DD")) {
+              return 'Today';
+            }
+            else if (dateKey === moment().subtract(1, "days").format("YYYY-MM-DD")) {
+              return 'Yesterday';
+            }
+            return moment(dateKey).format("MM-DD");
+          }
+        ),
+        datasets: [
+          {
+            label: 'Available Funds',
+            data: Array.from(dataMap.values()).reverse(),
+            borderWidth: 3,
+            fill: false,
+            backgroundColor: 'rgb(173,216,230)',
+            borderColor: 'rgb(173,216,230)'
+          }
+        ]
+      },
+      options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  callback: function(value, index, values) {
+                      return '$' + value;
+                  }
+                }
+            }]
+        },
+        plugins: {
+          datalabels: {
+            display: false,
+            formatter: (value, context) => {
+              return value.toFixed(2);
+            }
+          }
+        }
       }
-    )
-  }
-
-  onPlaidSuccess(token: any, metadata: any) {
-    this.restApiService.savePlaidToken(token).subscribe(
-      (returned: void) => {
-        console.log("SUCCESS SAVED");
-      }
-    );
-    console.log("SUCCESS", token);
-  }
-
-  onPlaidExit(error: any, metadata: any) {
-    console.log("EXIT", error);
-  }
-
-  onPlaidLoad(event: any) {
-    console.log("LOAD", event);
-  }
-
-  onPlaidEvent(event: any, metadata: any) {
-    console.log("EVENT", event);
-  }
-
-  onPlaidClick() {
-    this.plaidLinkService
-      .createPlaid(
-        Object.assign({}, this.plaidConfig, {
-          onSuccess: (token, metadata) => this.onPlaidSuccess(token, metadata),
-          onExit: (error, metadata) => this.onPlaidExit(error, metadata),
-          onEvent: (eventName, metadata) => this.onPlaidEvent(eventName, metadata)
-        })
-      )
-      .then((handler: PlaidLinkHandler) => {
-        this.plaidLinkHandler = handler;
-        this.plaidLinkHandler.open();
-      });
+    });
   }
 
 }

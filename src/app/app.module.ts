@@ -12,17 +12,33 @@ import { AuthorizationInterceptor } from './interceptors/authorization.intercept
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
+import { ShoppingComponent } from './modules/shopping/shopping.component';
+import { InvestmentsComponent } from './modules/investments/investments.component';
+import { FormsModule } from '@angular/forms';
+import { BudgetComponent } from './modules/budget/budget.component';
+import { DealsComponent } from './modules/deals/deals.component';
+import { SettingsComponent } from './modules/settings/settings.component';
+import { FundsComponent } from './modules/funds/funds.component';
+import { PlaidAccountModalComponent } from './modals/plaid-account-modal/plaid-account-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    FundsComponent,
+    ShoppingComponent,
+    InvestmentsComponent,
+    BudgetComponent,
+    DealsComponent,
+    SettingsComponent,
+    PlaidAccountModalComponent
   ],
   entryComponents: [],
   imports: [
     BrowserModule, 
     CommonModule,
+    FormsModule,
     IonicModule.forRoot(), 
     IonicStorageModule.forRoot(),
     AppRoutingModule,

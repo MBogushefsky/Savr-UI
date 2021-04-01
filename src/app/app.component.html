@@ -28,9 +28,10 @@
             <ion-item-divider class="fixed-divider"></ion-item-divider>
             <ng-container *ngFor="let p of appPages; let i = index">
               <ion-menu-toggle *ngIf="p.section === 0" auto-hide="false">
-                <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                <ion-item [ngClass]="p.comingSoon ? 'coming-soon' : ''" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
                   <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                   <ion-label>{{ p.title }}</ion-label>
+                  <ion-badge *ngIf="p.comingSoon" color="medium">Coming Soon</ion-badge>
                 </ion-item>
               </ion-menu-toggle>
             </ng-container>

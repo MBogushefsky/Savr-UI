@@ -8,6 +8,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-prod": "ng build --prod",
+    "build-prod-base": "ng build --prod --base-href /savr/",
     "ionic": "ionic serve",
     "ionic-prod": "ionic serve --prod --port=8080",
     "test": "ng test",

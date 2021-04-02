@@ -19,6 +19,8 @@ export class ShoppingComponent implements OnInit {
   loadingEbaySearch: boolean = false;
   loadingWalmartSearch: boolean = false;
 
+  showSearches: string[] = [];
+
   constructor(private restApiService: RestApiService, private rainForestService: RainForestService) { }
 
   ngOnInit() {}

@@ -20,8 +20,15 @@
         <ion-card-title>
           <ion-grid>
             <ion-row>
-              <ion-col size="11">
+              <ion-col size="8">
                 <ion-input (input)="setSearchInput($event)" [clearInput]="true" (keyup.enter)="searchForProducts()" placeholder="Search..."></ion-input>
+              </ion-col>
+              <ion-col class="3">
+                <ion-select [(ngModel)]="showSearches" multiple="true" cancelText="Cancel" okText="Select">
+                  <ion-select-option value="amazon">Amazon</ion-select-option>
+                  <ion-select-option value="ebay">eBay</ion-select-option>
+                  <ion-select-option value="walmart">Walmart</ion-select-option>
+                </ion-select>
               </ion-col>
               <ion-col size="1">
                 <ng-container *ngIf="!loadingAmazonSearch && !loadingEbaySearch && !loadingWalmartSearch">
@@ -42,7 +49,7 @@
     </ion-card>
     <ion-grid>
       <ion-row>
-        <ion-col size="4">
+        <ion-col *ngIf="showSearches.includes('amazon')">
           <ion-card>
             <ion-card-header class="store-card-header">
               <ion-card-title class="flex-align-center">
@@ -84,7 +91,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="4">
+        <ion-col *ngIf="showSearches.includes('ebay')">
           <ion-card>
             <ion-card-header class="store-card-header">
               <ion-card-title class="flex-align-center">
@@ -126,7 +133,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="4">
+        <ion-col *ngIf="showSearches.includes('walmart')">
           <ion-card>
             <ion-card-header class="store-card-header">
               <ion-card-title class="flex-align-center">

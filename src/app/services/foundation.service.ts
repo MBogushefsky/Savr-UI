@@ -13,8 +13,8 @@ export class FoundationService {
     constructor(private globals: Globals, private alertController: AlertController) {}
 
     async presentErrorAlert(errorResponse: HttpErrorResponse) {
-        let errorHeader = errorResponse.error != null ? errorResponse.error.error : errorResponse.error;
-        let errorMessage = errorResponse.error != null ? errorResponse.error.message : null;
+        let errorHeader = errorResponse.status != null ? errorResponse.status : errorResponse.error;
+        let errorMessage = (errorResponse.error != null && errorResponse.error.error != null) ? errorResponse.error.error : null;
         const alert = await this.alertController.create({
             header: errorHeader,
             subHeader: errorMessage,

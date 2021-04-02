@@ -14,18 +14,28 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
+  <ion-content id="container">
     <ion-card>
       <ion-card-content class="flex-align-center">
-        <div class="chart-area">
-          <div>
-            <ion-title>
-              Available Funds (Past 30 Days)
-            </ion-title>
-          </div>
-          <canvas id="data-chart"></canvas>
-        </div>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-card [routerLink]="['/shopping']">
+                <ion-card-header class="flex-align-center">
+                  <ion-card-title>Smart-Shopping</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+            </ion-col>
+            <ion-col>
+              <ion-card [routerLink]="['/funds']">
+                <ion-card-header class="flex-align-center">
+                  <ion-card-title>Funds</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
-  </div>
+  </ion-content>
 </ion-content>

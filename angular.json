@@ -13,7 +13,6 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "rebaseRootRelativeCssUrls": true,
           "options": {
             "outputPath": "www",
             "index": "src/index.html",

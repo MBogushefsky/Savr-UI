@@ -17,11 +17,12 @@ export class AppComponent implements OnInit {
 
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home', comingSoon: false, section: 0 },
-    { title: 'Funds', url: '/funds', icon: 'cash', comingSoon: true, section: 0 },
-    { title: 'Budget', url: '/budget', icon: 'restaurant', comingSoon: true, section: 0 },
+    { title: 'Funds', url: '/funds', icon: 'cash', comingSoon: false, section: 0 },
+    { title: 'Expenses', url: '/expenses', icon: 'restaurant', comingSoon: false, section: 0 },
     { title: 'Investments', url: '/investments', icon: 'trending-up', comingSoon: true, section: 0 },
-    { title: 'Smart-Shopping', url: '/shopping', icon: 'card', comingSoon: false, section: 0 },    
-    { title: 'Deals', url: '/deals', icon: 'pricetag', comingSoon: false, section: 0 },    
+    { title: 'Plan An Event', url: '/event-planning', icon: 'wine', comingSoon: true, section: 0 },    
+    { title: 'Smart-Shopping', url: '/shopping', icon: 'card', comingSoon: true, section: 0 },    
+    { title: 'Deals', url: '/deals', icon: 'pricetag', comingSoon: true, section: 0 },    
     { title: 'Settings', url: '/settings', icon: 'settings', section: 1 }
   ];
   //public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];

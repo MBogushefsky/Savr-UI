@@ -46,9 +46,18 @@ export class Globals {
     this.currentUser = user;
   }
 
+  public getMultipleOfRGBString(length: number) {
+    let colors = [];
+    for (var i = 0; i < length; i++) {
+      colors.push(this.getRGBString(i));
+    }
+    return colors;
+  }
+
   public getRGBString(index?: number, distanceThreshold?: number, distanceFromWhiteOrBlackThreshold?: number) {
     let rgb = [0, 0, 0];
-    if (index != null && this.colorsOrdered[index] != null) {rgb = this.colorsOrdered[index];
+    if (index != null && this.colorsOrdered[index] != null) {
+      rgb = this.colorsOrdered[index];
     }
     else {rgb = this.getGeneratedRGB(distanceThreshold, distanceFromWhiteOrBlackThreshold);
     }

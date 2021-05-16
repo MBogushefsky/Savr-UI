@@ -1,0 +1,32 @@
+<ion-content [fullscreen]="true" id="container" class="flex-align-center">
+  <form [formGroup]="signUpFormGroup">
+    <ion-grid class="login-input-area">
+      <ion-row>
+        <ion-col>
+          <img class="small-logo-icon" src="assets/leaf-icon-small.png">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input formControlName="firstName" (keyup.enter)="onSignUp()" class="login-input" type="text" placeholder="First Name"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input formControlName="lastName" (keyup.enter)="onSignUp()" class="login-input" type="text" placeholder="Last Name"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input formControlName="email" (keyup.enter)="onSignUp()" class="login-input" type="email" placeholder="Email"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input formControlName="username" (keyup.enter)="onSignUp()" class="login-input" type="text" placeholder="Username"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input formControlName="password" (keyup.enter)="onSignUp()" class="login-input" type="password" placeholder="Password"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input formControlName="confirmPassword" (keyup.enter)="onSignUp()" class="login-input" type="password" placeholder="Confirm Password"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-button (click)="onSignUp()" class="login-action" color="secondary">Sign Up</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

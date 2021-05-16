@@ -12,7 +12,7 @@ export class TokenCheckService {
   checkUserAndRedirect(user: string) {
     if (user == null) {
       this.globals.setCurrentUser(null);
-      if (this.router.url !== '/login') {
+      if (this.router.url !== '/login' && this.router.url !== '/sign-up') {
         this.router.navigate(['/login']);
       }
     }

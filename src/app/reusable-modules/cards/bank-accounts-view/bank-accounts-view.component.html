@@ -1,0 +1,76 @@
+<ion-card>
+  <ion-card-header *ngIf="header != null" class="flex-align-center bank-account-name">
+    {{ header }}
+  </ion-card-header>
+  <ion-card-header>
+    <ion-toolbar>
+      <ion-segment (ionChange)="onTranscationScopeChange(null, $event)" [value]="transactionDisplayScope">
+        <ion-segment-button value="Past7Days">
+          <ion-label>Past 7 Days</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="Past30Days">
+          <ion-label>Past 30 Days</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="All">
+          <ion-label>All</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content>
+    <ng-container *ngIf="scopedTransactions != null">
+      <ion-list *ngIf="scopedTransactions.length > 0">
+        <ion-item-group class="modal-main-list" *ngFor="let transactionGroup of scopedTransactions">
+          <ion-item-divider>
+            <ion-label>{{ transactionGroup[0].date }}</ion-label>
+          </ion-item-divider>
+          <ion-item *ngFor="let transaction of transactionGroup">
+            <ion-label>
+              <h2 *ngIf="transaction.merchantName">{{ transaction.merchantName }}</h2>
+              <h2 *ngIf="!transaction.merchantName">{{ transaction.name }}</h2>
+              <h3>{{ transaction.date | date }}</h3>
+              <p>
+                <ion-chip class="category-chip" disabled="true" outline="true" *ngFor="let category of transaction.categories">
+                  <ion-label>{{ category }}</ion-label>
+                </ion-chip>
+              </p>
+            </ion-label>
+            <ion-badge [color]="transaction.amount >= 0 ? 'success' : 'danger'"><span *ngIf="transaction.amount >= 0">+</span>{{ transaction.amount | currency }}</ion-badge>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+      <div *ngIf="scopedTransactions.length == 0" class="no-transactions-area flex-align-center">
+        <h1>
+          <span *ngIf="transactionDisplayScope == 'Past7Days'">No transactions in the past 7 days</span>
+          <span *ngIf="transactionDisplayScope == 'Past30Days'">No transactions in the past 30 days</span>
+          <span *ngIf="transactionDisplayScope == 'All'">No transactions</span>
+        </h1>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="scopedTransactions == null">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+          </ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let number of [0,1,2,3,4]">
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </ion-card-content>
+</ion-card>

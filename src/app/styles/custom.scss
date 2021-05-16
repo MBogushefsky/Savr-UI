@@ -47,7 +47,8 @@ ion-card-content ion-item:last-child {
 }
 
 .fixed-divider {
-  margin-top: -2rem;
+  min-height: 1px;
+  height: 1px;
 }
 
 .positive-currency-amount {
@@ -82,6 +83,10 @@ ion-spinner {
   justify-content: center;
 }
 
+.text-align-center {
+  text-align: center;
+}
+
 .no-padding {
   padding: 0;
 }
@@ -95,6 +100,10 @@ ion-spinner {
   margin-top: -2rem;
 }
 
-.plaid-institution-logo {
+.bank-institution-logo {
   width: 15rem;
+}
+
+.full-width {
+  width: 100%;
 }

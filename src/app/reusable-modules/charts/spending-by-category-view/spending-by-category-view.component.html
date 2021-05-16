@@ -1,0 +1,35 @@
+<ion-card>
+  <ion-card-content class="flex-align-center">
+      <app-pie-chart *ngIf="chartLabels != null && chartValues != null" 
+      [title]="'Transactions by Category'" 
+      [scopes]="chartScopes"
+      [labels]="chartLabels" 
+      [values]="chartValues"
+      (onScopeChange)="onScopeChange($event)">
+    </app-pie-chart>
+  </ion-card-content>
+</ion-card>
+<!--
+  <ion-card>
+      <ion-card-content class="flex-align-center">
+        <div class="chart-area">
+          <ng-container *ngIf="activeCharts.spots.topMiddle">
+            <div *ngIf="activeCharts.spots.topMiddle.type === AvailableCharts.SpendingByCategory">
+              <ion-title>
+                Spending by Category
+              </ion-title>
+            </div>
+            <div *ngIf="activeCharts.spots.topMiddle.type === AvailableCharts.SingleCategorySpending">
+              <ion-title>
+                <ion-text class="previous-chart-button" (click)="backToChart('topMiddle', activeCharts.spots.topMiddle.previous)">
+                  <ion-icon name="arrow-undo-circle-outline"></ion-icon>
+                </ion-text>
+                Transactions in Category ({{ activeCharts.spots.topMiddle.properties.category }})
+              </ion-title>
+            </div>
+          </ng-container>
+          <canvas (click)="clickedChart($event)" id="category-data-chart"></canvas>
+        </div>
+      </ion-card-content>
+    </ion-card>
+-->

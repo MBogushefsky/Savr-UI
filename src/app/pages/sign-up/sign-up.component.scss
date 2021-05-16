@@ -1,0 +1,39 @@
+#container {
+    width: 100%;
+}
+
+.login-input-area {
+    margin-top: 10vh;
+    max-width: 400px;
+}
+
+.login-input-area ion-row:first-child {
+    margin-bottom: 0.5rem;
+}
+
+.login-input-area ion-row:nth-child(2), .login-input-area ion-row:nth-child(3) {
+    height: 25%;
+}
+
+.login-input-area ion-row:nth-child(4), .login-input-area ion-row:last-child {
+    height: 20%;
+}
+
+.login-input-area ion-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-input {
+    width: 90%;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 10px !important;
+    border: 1px solid #f1f1f1 !important;
+    --background: rgb(219,219,219) !important;
+}
+
+.login-action {
+    width: 100%;
+}

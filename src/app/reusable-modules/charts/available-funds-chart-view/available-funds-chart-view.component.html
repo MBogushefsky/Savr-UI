@@ -1,0 +1,11 @@
+<ion-card>
+  <ion-card-content class="flex-align-center">
+      <app-line-chart *ngIf="chartLabels != null && chartValues != null" 
+      [title]="'Available Funds'" 
+      [scopes]="scopes"
+      [labels]="chartLabels" 
+      [values]="chartValues"
+      (onScopeChange)="onScopeChange($event)">
+    </app-line-chart>
+  </ion-card-content>
+</ion-card>

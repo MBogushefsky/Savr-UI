@@ -29,7 +29,7 @@ export class AuthorizationInterceptor implements HttpInterceptor {
             },
             (error: HttpErrorResponse) => {
                 this.foundationService.hideLoadingSpinner();
-                this.foundationService.presentErrorAlert(error);
+                //this.foundationService.presentErrorAlert(error);
             }
         ));
     }

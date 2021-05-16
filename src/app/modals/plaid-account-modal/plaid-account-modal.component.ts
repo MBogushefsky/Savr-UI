@@ -27,13 +27,13 @@ export class PlaidAccountModalComponent implements OnInit {
   }
 
   loadTransactionsForAccount(accountId: string) {
-    this.restApiService.getTransactionsByAccountId(accountId).subscribe(
-      (returnedTransactions: PlaidTransaction[]) => {
-        this.foundationService.randomDataValuesIfPresentationMode('PlaidTransaction', returnedTransactions);
-        this.allTransactions = returnedTransactions;
-        this.onTranscationScopeChange(this.transactionDisplayScope);
-      }
-    );
+    // this.restApiService.getTransactionsByAccountId(accountId).subscribe(
+    //   (returnedTransactions: PlaidTransaction[]) => {
+    //     this.foundationService.randomDataValuesIfPresentationMode('PlaidTransaction', returnedTransactions);
+    //     this.allTransactions = returnedTransactions;
+    //     this.onTranscationScopeChange(this.transactionDisplayScope);
+    //   }
+    // );
   }
 
   onTranscationScopeChange(scope: string, event?: any) {

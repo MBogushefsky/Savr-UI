@@ -1,0 +1,35 @@
+<ion-card *ngFor="let institution of plaidInstitutions | keyvalue">
+  <ion-card-header class="flex-align-center">
+    <ion-card-title class="plaid-institution-sum">
+      <span [class]="plaidInstitutionSums[institution.key] >= 0 ? 'positive-currency-amount' : 'negative-currency-amount'">
+        <span *ngIf="plaidInstitutionSums[institution.key] < 0">-</span>{{ plaidInstitutionSums[institution.key] | currency }}
+      </span>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item class="plaid-account-area ion-activatable ripple-parent" *ngFor="let plaidAccount of institution.value" [routerLink]="['/bank-account-view/' + plaidAccount.accountId]">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1" class="flex-align-center">
+              <img class="bank-institution-logo" [src]="'assets/' + plaidAccount.institutionId + '-logo.png'"/>
+            </ion-col>
+            <ion-col size="8" class="flex-align-center"><ion-title>{{ plaidAccount.name }}</ion-title></ion-col>
+            <ion-col size="2" class="flex-align-center">
+              <ion-chip class="chip-opacity">
+                <ion-label>
+                  {{ getPreferredNameOfSubType(plaidAccount.subType) }}
+                  <i *ngIf="plaidAccount.subType === 'checking'" class="fas fa-wallet"></i>
+                  <i *ngIf="plaidAccount.subType === 'savings'" class="fas fa-piggy-bank"></i>
+                  <i *ngIf="plaidAccount.subType === 'credit card'" class="far fa-credit-card"></i>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="1" class="flex-align-center"><ion-badge color="success">{{ plaidAccount.availableBalance | currency }}</ion-badge></ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

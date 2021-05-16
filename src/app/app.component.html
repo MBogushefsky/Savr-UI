@@ -1,6 +1,6 @@
 <ion-app>
   <ng-container *ngIf="globals.appLoaded">
-    <ion-split-pane contentId="main-content" when="(min-width: 2000px)" *ngIf="router.url !== '/login' && this.globals.getCurrentUser() != null">
+    <ion-split-pane contentId="main-content" when="(min-width: 2000px)" *ngIf="router.url !== '/login' && router.url !== '/sign-up' && this.globals.getCurrentUser() != null">
       <ion-menu contentId="main-content" class="menu-content" type="overlay">
         <ion-content>
           <ion-list id="main-list" class="menu-list">
@@ -39,21 +39,25 @@
   
           <ion-list id="secondary-list" class="menu-list">  
             <ng-container *ngFor="let p of appPages; let i = index">
-              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" *ngIf="p.section === 1">
-                <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
-              </ion-item>
+              <ion-menu-toggle auto-hide="false">
+                <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" *ngIf="p.section === 1">
+                  <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
             </ng-container>
-            <ion-item class="log-out-button" routerDirection="root" (click)="onLogout()" [routerLink]="['/login']" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
-              <ion-label>Log Out</ion-label>
-            </ion-item>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item class="log-out-button" routerDirection="root" (click)="onLogout()" [routerLink]="['/login']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
+                <ion-label>Log Out</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
           </ion-list>
         </ion-content>
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
     </ion-split-pane>
-    <ion-content *ngIf="router.url === '/login'">
+    <ion-content *ngIf="router.url === '/login' || router.url === '/sign-up'">
       <ion-router-outlet id="main-content"></ion-router-outlet>
     </ion-content>
   </ng-container>

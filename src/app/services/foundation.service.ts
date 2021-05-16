@@ -15,12 +15,37 @@ export class FoundationService {
     async presentErrorAlert(errorResponse: HttpErrorResponse) {
         let errorHeader = errorResponse.status != null ? errorResponse.status : errorResponse.error;
         let errorMessage = (errorResponse.error != null && errorResponse.error.error != null) ? errorResponse.error.error : null;
+        this.presentBasicAlert(errorHeader, errorMessage);
+    }
+
+    async presentBasicAlert(header: string, message: string) {
         const alert = await this.alertController.create({
-            header: errorHeader,
-            subHeader: errorMessage,
+            header: header,
+            subHeader: message,
             buttons: ['OK']
         });
         await alert.present();
+    }
+
+    formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
+     
+
+    randomDataValuesIfPresentationModeDoubleDimensional(type: string, objects: any[][]) {
+        for (let objectArray of objects) {
+            this.randomDataValuesIfPresentationMode(type, objectArray);
+        }
     }
 
     randomDataValuesIfPresentationMode(type: string, objects: any[]) {

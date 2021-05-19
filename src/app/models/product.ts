@@ -1,8 +1,8 @@
 export class Product {
+    public id: string;
     public title: string;
     public imageSrc: string;
-    public price: number;
-    public priceRaw: string;
+    public price: string;
     public link: string;
-    public platform: string;
+    public extras: any;
 }

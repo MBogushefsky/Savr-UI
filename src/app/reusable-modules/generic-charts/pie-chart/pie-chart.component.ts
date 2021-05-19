@@ -49,7 +49,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 
   loadChart() {
     let backgroundColors = this.globals.getMultipleOfRGBString(this.values.length);
-    this.chart = new Chart('data-chart', {
+    this.chart = new Chart('pie-chart', {
       type: 'doughnut',
       data: {
         datasets: [{

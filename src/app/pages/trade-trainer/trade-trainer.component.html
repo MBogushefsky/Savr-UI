@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Trade Trainer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-content id="container">
+    <ion-card class="overflow-visible">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="11">
+                <ng-template #optionsTemplate let-attrs="attrs">
+                  <span [innerHTML]="attrs.data.name | boldprefix:attrs.keyword"></span>
+                </ng-template>
+                <ion-auto-complete 
+                  #searchbar
+                  [dataProvider]="this" 
+                  [template]="optionsTemplate" 
+                  [useIonInput]="true"
+                  [clearInvalidInput]="true"
+                  [options]="{ placeholder : 'Search for Stock or Cryptocurrency Symbol...', debounce: 600 }">
+                </ion-auto-complete>
+                <!-- <ion-input [(ngModel)]="searchInput" [clearInput]="true" (input)="setSearchInput($event)" (keyup.enter)="searchForStockSymbol()" placeholder="Search for Stock or Cryptocurrency Symbol..."></ion-input> -->
+              </ion-col>
+              <ion-col size="1">
+                <ng-container *ngIf="!loadingSearch">
+                  <ion-button (click)="searchForStockSymbol()" class="search-button">
+                    <span>Go</span>
+                  </ion-button>
+                </ng-container>
+                <ng-container *ngIf="loadingSearch">
+                  <ion-button [disabled]="true" class="search-button">
+                    <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
+                  </ion-button>
+                </ng-container>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+    <app-symbol-price-data-view *ngIf="chartSymbol != null" [symbol]="chartSymbol"></app-symbol-price-data-view>
+    <ion-card *ngIf="loadingSearch">
+      <div class="flex-align-center">
+        <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
+      </div>
+    </ion-card>
+  </ion-content>
+</ion-content>

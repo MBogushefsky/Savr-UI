@@ -107,3 +107,57 @@ ion-spinner {
 .full-width {
   width: 100%;
 }
+
+.overflow-visible {
+  overflow: visible;
+}
+
+ion-auto-complete {
+  width: 100%;
+}
+
+.float-right {
+  float: right;
+}
+
+.visible-opacity {
+  opacity: 1;
+}
+
+.grayed-out-text {
+  color: gray;
+}
+
+.inner-spinner {
+  position: relative;
+  top: auto;
+  left: auto;
+}
+
+ion-card, ion-item {
+  overflow: visible;
+}
+
+ion-item::part(native) {
+  z-index: auto !important;
+}
+
+p-dropdown div:first-child {
+  min-width: 15rem;
+}
+
+p-inputnumber span {
+  width: 15rem;
+}
+
+p-calendar span {
+  width: 15rem;
+}
+
+ion-card-header {
+  font-size: 2rem;
+}
+
+.incomplete-area {
+  opacity: 0.35;
+}

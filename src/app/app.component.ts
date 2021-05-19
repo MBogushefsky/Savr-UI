@@ -17,15 +17,13 @@ export class AppComponent implements OnInit {
 
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home', comingSoon: false, section: 0 },
-    { title: 'Funds', url: '/funds', icon: 'cash', comingSoon: false, section: 0 },
-    { title: 'Expenses', url: '/expenses', icon: 'restaurant', comingSoon: false, section: 0 },
-    { title: 'Investments', url: '/investments', icon: 'trending-up', comingSoon: true, section: 0 },
-    { title: 'Plan An Event', url: '/event-planning', icon: 'wine', comingSoon: true, section: 0 },    
-    { title: 'Smart-Shopping', url: '/shopping', icon: 'card', comingSoon: true, section: 0 },    
-    { title: 'Deals', url: '/deals', icon: 'pricetag', comingSoon: true, section: 0 },    
+    { title: 'Breakdown', url: '/breakdown', icon: 'cash', comingSoon: false, section: 0 },
+    { title: 'Plan', url: '/plan', icon: 'leaf', comingSoon: true, section: 0 },
+    { title: 'Trade Trainer', url: '/trade-trainer', icon: 'trending-up', comingSoon: false, section: 0 },
+    { title: 'Smart-Shopping', url: '/smart-shopping', icon: 'card', comingSoon: false, section: 0 },  
+    { title: 'Plan An Event', url: '/event-planning', icon: 'wine', comingSoon: true, section: 0 },      
     { title: 'Settings', url: '/settings', icon: 'settings', section: 1 }
   ];
-  //public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(public router: Router, private storage: Storage, public globals: Globals, private tokenCheckService: TokenCheckService) {
     this.tokenCheck = setInterval(() => {
       this.storage.get('CurrentUser').then((user) => {
@@ -39,6 +37,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(new Date().getTimezoneOffset());
   }
 
   onLogout() {

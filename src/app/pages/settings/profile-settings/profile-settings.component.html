@@ -1,0 +1,33 @@
+<div class="profile-header-area">
+  <div class="profile-image-container">
+    <label for="profileImageFileInput">
+      <input type="file" id="profileImageFileInput" (change)="onProfileImageFileChange($event)"/>
+      <ion-avatar class="profile-avatar-image">
+        <img *ngIf="globals.getCurrentUser().profileImage == null" src="assets/person-icon.png" />
+        <img *ngIf="globals.getCurrentUser().profileImage != null" [src]="globals.getCurrentUser().profileImage">  
+      </ion-avatar>
+      <div class="overlay"><ion-icon name="cloud-upload-outline"></ion-icon></div>
+    </label>
+  </div>
+</div> 
+<div>
+  <ion-item>
+    <ion-label position="stacked">First Name</ion-label>
+    <ion-input type="text" [(ngModel)]="profileSettings.firstName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Last Name</ion-label>
+    <ion-input type="text" [(ngModel)]="profileSettings.lastName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input type="email" [(ngModel)]="profileSettings.email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Phone Number</ion-label>
+    <ion-input type="tel" [(ngModel)]="profileSettings.phoneNumber"></ion-input>
+  </ion-item>
+  <ion-button expand="block" (click)="saveProfileSettings()">
+    <ion-icon name="save-outline"></ion-icon> &nbsp;Save
+  </ion-button>
+</div>

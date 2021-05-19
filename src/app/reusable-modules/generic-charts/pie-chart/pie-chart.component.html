@@ -6,19 +6,13 @@
   </div>
   <ion-toolbar class="chart-toolbar">
     <ion-segment (ionChange)="onChartScopeChange(null, $event)" [value]="scope">
-      <ion-segment-button value="Past1Month">
-        <ion-label>Past 1 Month</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="Past2Months">
-        <ion-label>Past 2 Months</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="Past3Months">
-        <ion-label>Past 3 Months</ion-label>
+      <ion-segment-button *ngFor="let scopeOption of scopes" [value]="scopeOption.value">
+        <ion-label>{{ scopeOption.label }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
   <div class="chart-container">
-    <canvas id="data-chart" style="width:100%; height:100%;"></canvas>
+    <canvas id="pie-chart" style="width:100%; height:100%;"></canvas>
   </div>
   <h3 *ngIf="showDisclaimer">Disclaimer: Please allow at least 6 hours for recent transactions to update</h3>
 </div>

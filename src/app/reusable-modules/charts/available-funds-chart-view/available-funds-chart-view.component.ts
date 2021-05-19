@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { Globals } from 'src/app/globals';
 import { PlaidAccount, PlaidTransaction } from 'src/app/models/plaid';
 import { FoundationService } from 'src/app/services/foundation.service';
@@ -20,6 +21,10 @@ export class AvailableFundsChartViewComponent implements OnInit {
 
   chartLabels: string[];
   chartValues: number[];
+  chartOptions: any = {
+    autoSkip: true,
+    maxTicksLimit: 31
+  };
   
   constructor(private globals: Globals, 
     private restApiService: RestApiService,
@@ -34,12 +39,12 @@ export class AvailableFundsChartViewComponent implements OnInit {
       },
       {
         label: 'Past 2 Months',
-        value: 'Past2Month',
+        value: 'Past2Months',
         default: false
       },
       {
         label: 'Past 3 Months',
-        value: 'Past3Month',
+        value: 'Past3Months',
         default: false
       }
     ];
@@ -87,7 +92,7 @@ export class AvailableFundsChartViewComponent implements OnInit {
     let labels = [];
     let values = [];
     
-    labels.push(this.foundationService.formatDate(new Date()));
+    labels.push(moment(new Date()).format("MM/DD"));
     values.push(this.bankAccountsAvailableSum);
     let accumulatingBalance = this.bankAccountsAvailableSum;
     for (let transactionGroup of this.scopedTransactions) {
@@ -97,11 +102,11 @@ export class AvailableFundsChartViewComponent implements OnInit {
       }
       let dateLabel = new Date(transactionGroup[0].date);
       dateLabel.setDate(dateLabel.getDate());
-      labels.push(this.foundationService.formatDate(dateLabel));
+      labels.push(moment(dateLabel).format("MM/DD"));
       accumulatingBalance -= sumOfGroup;
       values.push(accumulatingBalance);
     }
-    this.chartLabels = labels.reverse();
-    this.chartValues = values.reverse();
+    this.chartLabels = labels;
+    this.chartValues = values;
   }
 }

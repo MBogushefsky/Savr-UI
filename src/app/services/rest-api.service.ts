@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PlaidAccount, PlaidTransaction } from '../models/plaid';
+import { Product } from '../models/product';
 import { User } from '../models/user';
 import { UserPreference, UserPreferenceType } from '../models/user-preference';
 import { FoundationService } from './foundation.service';
@@ -59,7 +60,7 @@ export class RestApiService {
     if (startDate != null && endDate != null) {
       let startDateParam = this.foundationService.formatDate(startDate);
       let endDateParam = this.foundationService.formatDate(endDate);
-      return this.http.get<PlaidTransaction[]>(this.apiHost + "/transactions/ungrouped?accountIds=" + accountIds + "&startDate=" + startDateParam + "&endDate=" + endDateParam);
+      return this.http.get<PlaidTransaction[]>(this.apiHost + "/transactions/ungrouped?accountIds=" + accountIds + "&start-date=" + startDateParam + "&end-date=" + endDateParam);
     }
     else {
       return this.http.get<PlaidTransaction[]>(this.apiHost + "/transactions/ungrouped?accountIds=" + accountIds);
@@ -70,7 +71,7 @@ export class RestApiService {
     if (startDate != null && endDate != null) {
       let startDateParam = this.foundationService.formatDate(startDate);
       let endDateParam = this.foundationService.formatDate(endDate);
-      return this.http.get<PlaidTransaction[][]>(this.apiHost + "/transactions/grouped?accountIds=" + accountIds + "&startDate=" + startDateParam + "&endDate=" + endDateParam);
+      return this.http.get<PlaidTransaction[][]>(this.apiHost + "/transactions/grouped?accountIds=" + accountIds + "&start-date=" + startDateParam + "&end-date=" + endDateParam);
     }
     else {
       return this.http.get<PlaidTransaction[][]>(this.apiHost + "/transactions/grouped?accountIds=" + accountIds);
@@ -93,12 +94,35 @@ export class RestApiService {
     return this.http.get<PlaidAccount>(this.apiHost + "/accounts/" + id);
   }
 
-  getEbayProductsByKeyword(keyword: string) {
-    return this.http.get<any>(this.apiHost + "/ebay/products?keyword=" + keyword);
+  getAmazonProductsByKeyword(keyword: string, page: number) {
+    return this.http.get<Product[]>(this.apiHost + "/amazon/products?keyword=" + keyword + "&page=" + page);
   }
 
-  getBlueCartProductsByKeyword(keyword: string) {
-    return this.http.get<any>(this.apiHost + "/blue-cart/products?keyword=" + keyword);
+  getEbayProductsByKeyword(keyword: string, page: number) {
+    return this.http.get<Product[]>(this.apiHost + "/ebay/products?keyword=" + keyword + "&page=" + page);
+  }
+
+  getWalmartProductsByKeyword(keyword: string, page: number) {
+    return this.http.get<Product[]>(this.apiHost + "/walmart/products?keyword=" + keyword + "&page=" + page);
+  }
+
+  searchForSymbol(query: string) {
+    return this.http.get<any>(this.apiHost + "/exchanges/search?query=" + query);
+  }
+
+  getSymbolMetadata(symbol: string, isStock: boolean) {
+    return this.http.get<any>(this.apiHost + "/exchanges/" + symbol + "/metadata?is-stock=" + isStock);
+  }
+
+  getSymbolPriceHistory(symbol: string, isStock: boolean, interval: string, startDate: Date, endDate: Date) {
+    if (startDate != null && endDate != null) {
+      let startDateParam = this.foundationService.formatDate(startDate);
+      let endDateParam = this.foundationService.formatDate(endDate);
+      return this.http.get<any>(this.apiHost + "/exchanges/" + symbol + "/price-history?is-stock=" + isStock + "&interval=" + interval + "&start-date=" + startDateParam + "&end-date=" + endDateParam);
+    }
+    else {
+      return this.http.get<any>(this.apiHost + "/exchanges/" + symbol + "/price-history?is-stock=" + isStock + "&interval=" + interval);
+    }
   }
 
   getIntradayOfStockSymbol(symbol: string) {

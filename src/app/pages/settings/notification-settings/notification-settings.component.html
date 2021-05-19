@@ -1,0 +1,81 @@
+<div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Text Message</ion-card-title>
+    </ion-card-header>
+    <ion-item-divider class="fixed-divider"></ion-item-divider>
+    <!-- <ion-card-header>
+      <ion-card-title>
+        Receive at  
+        <div class="float-right">
+          <p-calendar 
+            [showIcon]="true" 
+            icon="pi pi-clock" 
+            [timeOnly]="true" 
+            hourFormat="12" 
+            [stepMinute]="15">
+          </p-calendar>
+          - 
+          <p-calendar 
+            [showIcon]="true" 
+            icon="pi pi-clock" 
+            [timeOnly]="true" 
+            hourFormat="12" 
+            [stepMinute]="15">
+          </p-calendar>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item-divider class="fixed-divider"></ion-item-divider> -->
+    <ion-card-content>
+      <ion-item *ngFor="let alert of availableTextAlerts">
+        <ion-label>
+          <h2>{{ alert.name }}</h2>
+          <h3>{{ alert.description }}</h3>
+        </ion-label>
+        <ion-checkbox color="primary" (ionChange)="alertChanged($event, alert.id)" [checked]="userPreferenceValues[alert.id] === 'true'" slot="end"></ion-checkbox>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Email</ion-card-title>
+    </ion-card-header>
+    <ion-item-divider class="fixed-divider"></ion-item-divider>
+    <!-- <ion-card-header>
+      <ion-card-title>
+        Receive at  
+        <div class="float-right">
+          <p-calendar 
+            [showIcon]="true" 
+            icon="pi pi-clock" 
+            [timeOnly]="true" 
+            hourFormat="12" 
+            [stepMinute]="15">
+          </p-calendar>
+          - 
+          <p-calendar 
+            [showIcon]="true" 
+            icon="pi pi-clock" 
+            [timeOnly]="true" 
+            hourFormat="12" 
+            [stepMinute]="15">
+          </p-calendar>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item-divider class="fixed-divider"></ion-item-divider> -->
+    <ion-card-content>
+      <ion-item *ngFor="let alert of availableEmailAlerts">
+        <ion-label>
+          <h2>{{ alert.name }}</h2>
+          <h3>{{ alert.description }}</h3>
+        </ion-label>
+        <ion-checkbox color="primary" (ionChange)="alertChanged($event, alert.id)" [checked]="userPreferenceValues[alert.id] === 'true'" slot="end"></ion-checkbox>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-button expand="block" (click)="saveAlertPreferences()">
+    <ion-icon name="save-outline"></ion-icon> &nbsp;Save
+  </ion-button>
+</div>

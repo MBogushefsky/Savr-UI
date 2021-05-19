@@ -1,4 +1,3 @@
-import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
 import { User } from './models/user';
 
@@ -36,7 +35,8 @@ export class Globals {
         email: 'presentation-mode@presentation.com',
         passwordHash: this.currentUser.passwordHash,
         profileImage: this.currentUser.profileImage,
-        username: this.currentUser.username
+        username: this.currentUser.username,
+        phoneNumber: this.currentUser.phoneNumber
       };
     }
     return this.currentUser;

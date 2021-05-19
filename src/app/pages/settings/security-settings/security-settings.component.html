@@ -1,0 +1,17 @@
+<div>
+  <ion-item>
+    <ion-label position="stacked">Current Password</ion-label>
+    <ion-input [(ngModel)]="changePasswordSettings.currentPassword" type="password"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">New Password</ion-label>
+    <ion-input [(ngModel)]="changePasswordSettings.newPassword" type="password"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Confirm New Password</ion-label>
+    <ion-input [(ngModel)]="changePasswordSettings.newPasswordConfirm" type="password"></ion-input>
+  </ion-item>
+  <ion-button expand="block" (click)="changePassword()">
+    <ion-icon name="save-outline"></ion-icon> &nbsp;Save
+  </ion-button>
+</div>

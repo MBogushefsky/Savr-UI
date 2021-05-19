@@ -1,0 +1,66 @@
+<ion-item *ngFor="let type of userPreferenceTypes" 
+  [ngClass]="{ 'grayed-out-text': !type.sectionEnabler && !sectionEnabled }">
+  <ion-label>
+    <h2>{{ type.name }}</h2>
+    <h3>{{ type.description }}</h3>
+  </ion-label>
+  <p-checkbox 
+    *ngIf="type.dataType == 'boolean'"
+    [binary]="true"
+    (onChange)="checkboxChanged($event, type.id)"
+    [(ngModel)]="userPreferenceValues[type.id]">
+  </p-checkbox>
+  <p-inputNumber 
+    *ngIf="type.dataType == 'currency'"
+    mode="currency" 
+    [(ngModel)]="userPreferenceValues[type.id]"
+    currency="USD" 
+    (onInput)="valueChanged(null)"
+    [disabled]="type.immutable == true || !sectionEnabled"
+    locale="en-US">
+  </p-inputNumber>
+  <p-calendar
+    *ngIf="type.dataType == 'date'" 
+    [monthNavigator]="true" 
+    [(ngModel)]="userPreferenceValues[type.id]"
+    [yearNavigator]="true" 
+    dateFormat="mm/dd/yy"
+    (onSelect)="valueChanged(null)"
+    [disabled]="!sectionEnabled"
+    [minDate]="currentDate"
+    [yearRange]="calendarYearRange"
+    [showIcon]="true">
+  </p-calendar>
+  <p-dropdown
+    *ngIf="type.dataType == 'bankAccounts'" 
+    placeholder="Select one..."
+    [showClear]="true"
+    (onChange)="valueChanged($event)"
+    [options]="bankAccounts" 
+    [disabled]="!sectionEnabled"
+    [(ngModel)]="userPreferenceValues[type.id]" 
+    optionLabel="name"
+    optionValue="accountId">
+  </p-dropdown>
+  <p-dropdown
+    *ngIf="type.dataType == 'transactionCategories'" 
+    placeholder="Select one..."
+    [showClear]="true"
+    (onChange)="valueChanged(null)"
+    [options]="bankAccountTransactionCategories" 
+    [disabled]="!sectionEnabled"
+    [(ngModel)]="userPreferenceValues[type.id]">
+  </p-dropdown>
+  <p-dropdown
+    *ngIf="type.dataType == 'bankTransactions'" 
+    placeholder="Select one..."
+    [showClear]="true"
+    [filter]="true"
+    (onChange)="valueChanged(null)"
+    [options]="bankAccountTransactions" 
+    [disabled]="!sectionEnabled"
+    [(ngModel)]="userPreferenceValues[type.id]" 
+    optionLabel="name"
+    optionValue="transactionId">
+  </p-dropdown>
+</ion-item>

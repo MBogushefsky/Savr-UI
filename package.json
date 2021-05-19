@@ -20,6 +20,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^11.2.5",
+    "@angular/cdk": "^12.0.0",
     "@angular/common": "~11.2.0",
     "@angular/core": "~11.2.0",
     "@angular/forms": "~11.2.0",
@@ -30,9 +31,11 @@
     "@ionic-native/core": "^5.31.1",
     "@ionic/angular": "^5.5.2",
     "@ionic/storage": "^2.3.1",
+    "@progress/kendo-angular-gauges": "^4.1.0",
     "@types/chart.js": "^2.9.31",
     "chart.js": "2.9.4",
     "chartjs-plugin-datalabels": "^0.7.0",
+    "ionic4-auto-complete": "^2.9.8",
     "moment": "^2.29.1",
     "ngx-plaid-link": "^1.0.3",
     "primeicons": "^4.1.0",
@@ -40,7 +43,14 @@
     "rxjs": "~6.6.0",
     "sjcl": "^1.0.8",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@progress/kendo-angular-common": "^2.0.0",
+    "@progress/kendo-angular-intl": "^3.0.0",
+    "@progress/kendo-angular-l10n": "^3.0.0",
+    "@progress/kendo-drawing": "^1.0.0",
+    "@progress/kendo-licensing": "^1.0.2",
+    "@angular/localize": "~11.2.0",
+    "@progress/kendo-theme-default": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1101.4",

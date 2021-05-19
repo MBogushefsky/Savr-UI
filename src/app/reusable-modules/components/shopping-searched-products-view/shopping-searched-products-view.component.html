@@ -1,0 +1,52 @@
+<ion-card [ngClass]="{ 'incomplete-area': store == 'walmart' }">
+  <ion-card-header>
+    <ion-card-title class="flex-align-center">
+      <img class="products-title-icon-image" [src]="'assets/' + store + '-icon.png'" />
+    </ion-card-title>
+  </ion-card-header>
+  <ion-item-divider class="product-search-divider"></ion-item-divider>
+  <ion-card-content class="no-padding" *ngIf="!isLoading && products.length > 0">
+    <ion-card *ngFor="let product of products">
+      <ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <img class="product-image" [src]="product.imageSrc" />
+            </ion-col>
+            <ion-col size="10">
+              <ion-card-title>
+                {{ product.title }}
+              </ion-card-title>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-header>
+      <ion-card-content class="flex-align-center">
+        <ion-badge style="font-size: 1.5rem;" color="success">{{ product.price }}</ion-badge>
+      </ion-card-content>
+      <ion-card-content *ngIf="product.extras != null && product.extras.condition != null" class="flex-align-center">
+        <ion-badge style="font-size: 1rem;" color="secondary">{{ product.extras.condition }}</ion-badge>
+      </ion-card-content>
+      <ion-card-content *ngIf="product.extras != null && product.extras.rating != null" class="flex-align-center">
+        <p-rating [cancel]="false" [disabled]="true" [readonly]="true" [(ngModel)]="product.extras.rating"></p-rating>
+      </ion-card-content>
+      <ion-card-content *ngIf="product.extras != null && product.extras.prime == true" class="flex-align-center">
+        <ion-badge style="font-size: 1rem;" color="secondary">Prime</ion-badge>
+      </ion-card-content>
+      <ion-card-content *ngIf="product.extras != null && product.extras.freeShipping == true" class="flex-align-center">
+        <ion-badge style="font-size: 1rem;" color="secondary">Free Shipping</ion-badge>
+      </ion-card-content>
+      <ion-card-content class="flex-align-center">
+        <ion-button class="go-to-product-button" target="_blank" [href]="product.link">
+          <span>Go To Page</span>
+          <img [class]="'product-icon-image ' + store + '-icon-image'" [src]="'assets/' + store + '-icon.png'" />
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-card-content>
+  <ion-card-content *ngIf="isLoading">
+    <div class="flex-align-center">
+      <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
+    </div>
+  </ion-card-content>
+</ion-card>

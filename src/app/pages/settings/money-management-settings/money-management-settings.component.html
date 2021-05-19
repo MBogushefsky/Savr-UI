@@ -1,0 +1,96 @@
+<div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bank Accounts</ion-card-title>
+    </ion-card-header>
+    <ion-item-divider class="fixed-divider"></ion-item-divider>
+    <ion-card-content>
+      <ion-item *ngFor="let account of plaidBankAccounts">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1" class="flex-align-center">
+              <img class="bank-institution-logo" [src]="'assets/' + account.institutionId + '-logo.png'"/>
+            </ion-col>
+            <ion-col size="6" class="flex-align-center"><ion-title>{{ account.name }}</ion-title></ion-col>
+            <ion-col size="2" class="flex-align-center">
+              <ion-chip class="chip-opacity">
+                <ion-label>
+                  {{ getPreferredNameOfSubType(account.subType) }}
+                  <i *ngIf="account.subType === 'checking'" class="fas fa-wallet"></i>
+                  <i *ngIf="account.subType === 'savings'" class="fas fa-piggy-bank"></i>
+                  <i *ngIf="account.subType === 'credit card'" class="far fa-credit-card"></i>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="3" class="flex-align-center">
+              <ion-button>Change Name</ion-button>
+              <ion-button color="danger">Remove</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-button expand="block" (click)="onPlaidClick()">
+        <ion-icon name="link-outline"></ion-icon> &nbsp;Link Bank Account
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Goals</ion-card-title>
+    </ion-card-header>
+    <ion-item-divider class="fixed-divider"></ion-item-divider>
+    <ion-card-header>
+      <ion-toolbar class="chart-toolbar">
+        <ion-segment (ionChange)="onScopeChange(null, $event)" [value]="goalScope">
+          <ion-segment-button value="Savings">
+            <ion-label>Savings</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="DebtPayoff">
+            <ion-label>Debt Payoff</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="CategoryBudget">
+            <ion-label>Category Budget</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+    </ion-card-header>
+    <ion-card-content *ngIf="goalScope == 'Savings'">
+      <app-user-preference-control
+        *ngIf="availableSavingsGoals != null"
+        [userPreferenceTypes]="availableSavingsGoals"
+        [userPreferenceValues]="userPreferenceValues"
+        [bankAccounts]="plaidBankAccounts"
+        (onValueChanged)="userPreferenceValues = $event">
+      </app-user-preference-control>
+      <ion-button expand="block" (click)="saveUserPreferences(savingsGoalCategory)">
+        <ion-icon name="save-outline"></ion-icon> &nbsp;Save Goal
+      </ion-button>
+    </ion-card-content>
+    <ion-card-content *ngIf="goalScope == 'DebtPayoff'">
+      <app-user-preference-control
+        *ngIf="availableDebtPayoffGoals != null"
+        [userPreferenceTypes]="availableDebtPayoffGoals"
+        [userPreferenceValues]="userPreferenceValues"
+        [bankAccounts]="plaidBankAccounts"
+        (onValueChanged)="userPreferenceValues = $event">
+      </app-user-preference-control>
+      <ion-button expand="block" (click)="saveUserPreferences(debtPayoffGoalCategory)">
+        <ion-icon name="save-outline"></ion-icon> &nbsp;Save Goal
+      </ion-button>
+    </ion-card-content>
+    <ion-card-content *ngIf="goalScope == 'CategoryBudget'">
+      <app-user-preference-control
+        *ngIf="availableCategoryBudgetGoals != null"
+        [userPreferenceTypes]="availableCategoryBudgetGoals"
+        [userPreferenceValues]="userPreferenceValues"
+        (onValueChanged)="userPreferenceValues = $event">
+      </app-user-preference-control>
+      <ion-button expand="block" (click)="saveUserPreferences(categoryBudgetGoalCategory)">
+        <ion-icon name="save-outline"></ion-icon> &nbsp;Save Goal
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</div>
+<ng-template>
+  
+</ng-template>

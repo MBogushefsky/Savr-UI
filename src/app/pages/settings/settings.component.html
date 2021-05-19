@@ -9,117 +9,36 @@
 
 <ion-content [fullscreen]="true">
   <ion-content id="container">
-    <div class="profile-header-area">
-      <div class="profile-image-container">
-        <label for="profileImageFileInput">
-          <input type="file" id="profileImageFileInput" (change)="onProfileImageFileChange($event)"/>
-          <ion-avatar class="profile-avatar-image">
-            <img *ngIf="globals.getCurrentUser().profileImage == null" src="assets/person-icon.png" />
-            <img *ngIf="globals.getCurrentUser().profileImage != null" [src]="globals.getCurrentUser().profileImage">  
-          </ion-avatar>
-          <div class="overlay"><ion-icon name="cloud-upload-outline"></ion-icon></div>
-        </label>
-      </div>
-    </div>
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Profile</ion-card-title>
+        <ion-toolbar class="chart-toolbar">
+          <ion-segment (ionChange)="onScopeChange(null, $event)" [value]="settingsScope">
+            <ion-segment-button value="Profile">
+              <ion-label>Profile</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="MoneyManagement">
+              <ion-label>Money Management</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Notifications">
+              <ion-label>Notifications</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Security">
+              <ion-label>Security</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
       </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="stacked">First Name</ion-label>
-          <ion-input type="text" [(ngModel)]="profileSettings.firstName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Last Name</ion-label>
-          <ion-input type="text" [(ngModel)]="profileSettings.lastName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Email</ion-label>
-          <ion-input type="email" [(ngModel)]="profileSettings.email"></ion-input>
-        </ion-item>
-        <ion-button expand="block" (click)="saveProfileSettings()">
-          <ion-icon name="save-outline"></ion-icon> Save
-        </ion-button>
+      <ion-card-content *ngIf="settingsScope == 'Profile'">
+        <app-profile-settings></app-profile-settings>
       </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Security</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="stacked">Current Password</ion-label>
-          <ion-input [(ngModel)]="changePasswordSettings.currentPassword" type="password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">New Password</ion-label>
-          <ion-input [(ngModel)]="changePasswordSettings.newPassword" type="password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Confirm New Password</ion-label>
-          <ion-input [(ngModel)]="changePasswordSettings.newPasswordConfirm" type="password"></ion-input>
-        </ion-item>
-        <ion-button expand="block" (click)="changePassword()">
-          <ion-icon name="save-outline"></ion-icon> Save
-        </ion-button>
+      <ion-card-content *ngIf="settingsScope == 'MoneyManagement'">
+        <app-money-management-settings></app-money-management-settings>
       </ion-card-content>
-    </ion-card>
-    <ion-card *ngIf="false"> 
-      <ion-card-header>
-        <ion-card-title>Notifications</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-card *ngIf="availableGeneralAlerts.length !== 0">
-          <ion-card-header>
-            <ion-card-title>General</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-item *ngFor="let alert of availableGeneralAlerts">
-              <ion-label>{{ alert.name }}</ion-label>
-              <ion-checkbox color="primary" (ionChange)="alertChanged($event, alert.id)" [checked]="userPreferenceValues[alert.id] === 'true'" slot="end"></ion-checkbox>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-        <ion-card *ngIf="availableCryptocurrencyAlerts.length !== 0">
-          <ion-card-header>
-            <ion-card-title>Cryptocurrency</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-item *ngFor="let alert of availableCryptocurrencyAlerts">
-              <ion-label>{{ alert.name }}</ion-label>
-              <ion-checkbox color="primary" (ionChange)="alertChanged($event, alert.id)" [checked]="userPreferenceValues[alert.id] === 'true'" slot="end"></ion-checkbox>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-        <ion-button expand="block" (click)="saveAlertPreferences()">
-          <ion-icon name="save-outline"></ion-icon> Save
-        </ion-button>
+      <ion-card-content *ngIf="settingsScope == 'Notifications'">
+        <app-notification-settings></app-notification-settings>
       </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Linked Accounts</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-card *ngFor="let linkedInstitution of plaidLinkedInstitutions">
-          <ion-card-header>
-            <ion-card-title>          
-              <img class="bank-institution-logo" [src]="'assets/' + linkedInstitution.institutionId + '-logo.png'"/>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-item *ngFor="let account of linkedInstitution.accounts">
-              <ion-title>{{ account.name }}</ion-title>
-              <ion-button color="danger" slot="end">Unlink</ion-button>
-            </ion-item>
-            <ion-item>
-              <ion-button expand="block" (click)="onPlaidClick()">
-                <ion-icon name="link-outline"></ion-icon> Link More
-              </ion-button>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
+      <ion-card-content *ngIf="settingsScope == 'Security'">
+        <app-security-settings></app-security-settings>
       </ion-card-content>
     </ion-card>
   </ion-content>

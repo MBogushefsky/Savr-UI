@@ -3,9 +3,14 @@
     text-align: center;
 }
 
-.chart-area ion-title {
+.chart-area .title {
     margin: 1rem;
     font-size: 2rem;
+}
+
+.chart-area .sub-title {
+    margin: 1rem;
+    font-size: 1.5rem;
 }
 
 .chart-area h3 {

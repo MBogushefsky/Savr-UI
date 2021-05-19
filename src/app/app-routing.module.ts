@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { ExpensesComponent } from './pages/expenses/expenses.component';
-import { DealsComponent } from './pages/deals/deals.component';
 import { EventPlanningComponent } from './pages/event-planning/event-planning.component';
 import { BankAccountViewComponent } from './pages/bank-account-view/bank-account-view.component';
-import { FundsComponent } from './pages/funds/funds.component';
+import { BreakdownComponent } from './pages/breakdown/breakdown.component';
 import { HomeComponent } from './pages/home/home.component';
-import { InvestmentsComponent } from './pages/investments/investments.component';
+import { TradeTrainerComponent } from './pages/trade-trainer/trade-trainer.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SettingsComponent } from './pages/settings/settings.component';
-import { ShoppingComponent } from './pages/shopping/shopping.component';
+import { SmartShoppingComponent } from './pages/smart-shopping/smart-shopping.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { TokenGuard } from './route-guards/token.guard';
+import { PlanComponent } from './pages/plan/plan.component';
 
 const routes: Routes = [
   {
@@ -33,8 +32,13 @@ const routes: Routes = [
     canActivate: [TokenGuard]
   },
   {
-    path: 'funds',
-    component: FundsComponent,
+    path: 'breakdown',
+    component: BreakdownComponent,
+    canActivate: [TokenGuard]
+  },
+  {
+    path: 'plan',
+    component: PlanComponent,
     canActivate: [TokenGuard]
   },
   {
@@ -43,13 +47,8 @@ const routes: Routes = [
     canActivate: [TokenGuard]
   },
   {
-    path: 'expenses',
-    component: ExpensesComponent,
-    canActivate: [TokenGuard]
-  },
-  {
-    path: 'investments',
-    component: InvestmentsComponent,
+    path: 'trade-trainer',
+    component: TradeTrainerComponent,
     canActivate: [TokenGuard]
   },
   {
@@ -58,13 +57,8 @@ const routes: Routes = [
     canActivate: [TokenGuard]
   },
   {
-    path: 'shopping',
-    component: ShoppingComponent,
-    canActivate: [TokenGuard]
-  },
-  {
-    path: 'deals',
-    component: DealsComponent,
+    path: 'smart-shopping',
+    component: SmartShoppingComponent,
     canActivate: [TokenGuard]
   },
   {

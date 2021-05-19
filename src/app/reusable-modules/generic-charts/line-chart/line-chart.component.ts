@@ -9,7 +9,8 @@ import * as moment from 'moment';
 })
 export class LineChartComponent implements OnInit, OnChanges {
   @Input('title') title: string;
-  @Input('showDisclaimer') showDisclaimer: boolean = true;
+  @Input('subTitle') subTitle: string;
+  @Input('options') options: any = {};
   @Input('scopes') scopes: any[];
   @Input('labels') labels: any[];
   @Input('values') values: any[];
@@ -18,8 +19,6 @@ export class LineChartComponent implements OnInit, OnChanges {
   scope: string;
 
   chart: any;
-  chartWidth: number = 800;
-  chartHeight: number = 600;
 
   constructor() { }
 
@@ -79,7 +78,7 @@ export class LineChartComponent implements OnInit, OnChanges {
           }
       }
     });
-    this.chart = new Chart('data-chart', {
+    this.chart = new Chart('line-chart', {
       type: 'LineWithLine',
       data: {
         labels: labels
@@ -128,6 +127,14 @@ export class LineChartComponent implements OnInit, OnChanges {
             }
           }
         },
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 0,
+            bottom: 0
+          }
+        },
         hover: {
           mode: 'nearest',
           intersect: true
@@ -137,13 +144,14 @@ export class LineChartComponent implements OnInit, OnChanges {
         scales: {
           xAxes: [{
             ticks: {
-              autoSkip: true,
-              maxTicksLimit: 31
+              reverse: true,
+              autoSkip: this.options.autoSkip != null ? this.options.autoSkip : true,
+              maxTicksLimit: this.options.maxTicksLimit != null ? this.options.maxTicksLimit : null
             }
           }],
           yAxes: [{
               ticks: {
-                beginAtZero: true,
+                beginAtZero: this.options.beginAtZero != null ? this.options.beginAtZero : true,
                 callback: function(value, index, values) {
                     return '$' + value;
                 }

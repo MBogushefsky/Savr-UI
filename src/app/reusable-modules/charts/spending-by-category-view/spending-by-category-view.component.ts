@@ -32,12 +32,12 @@ export class SpendingByCategoryViewComponent implements OnInit {
       },
       {
         label: 'Past 2 Months',
-        value: 'Past2Month',
+        value: 'Past2Months',
         default: false
       },
       {
         label: 'Past 3 Months',
-        value: 'Past3Month',
+        value: 'Past3Months',
         default: false
       }
     ];

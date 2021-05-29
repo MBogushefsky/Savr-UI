@@ -30,6 +30,16 @@ ion-chip ion-label {
   --height: 80%;
 }
 
+.modal-header .modal-close-button {
+  cursor: pointer;
+}
+
+.modal-header .modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+
 .modal-container ion-content {
   --background: none;
 }
@@ -108,6 +118,23 @@ ion-spinner {
   width: 100%;
 }
 
+.full-height {
+  height: 100%;
+}
+
+.large-margin {
+  margin: 5rem;
+}
+
+.medium-vertical-margin {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.no-margin {
+  margin: 0;
+}
+
 .overflow-visible {
   overflow: visible;
 }
@@ -138,11 +165,22 @@ ion-card, ion-item {
   overflow: visible;
 }
 
+ion-card-title {
+  font-size: 2rem;
+  color: rgb(115, 115, 115);
+}
+
+ion-card-subtitle {
+  font-size: 1.5rem;
+  color: rgb(115, 115, 115);
+}
+
 ion-item::part(native) {
   z-index: auto !important;
 }
 
 p-dropdown div:first-child {
+  text-align: left;
   min-width: 15rem;
 }
 
@@ -160,4 +198,8 @@ ion-card-header {
 
 .incomplete-area {
   opacity: 0.35;
+}
+
+.large-text {
+  font-size: 3rem;
 }

@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home', comingSoon: false, section: 0 },
     { title: 'Breakdown', url: '/breakdown', icon: 'cash', comingSoon: false, section: 0 },
-    { title: 'Plan', url: '/plan', icon: 'leaf', comingSoon: true, section: 0 },
+    { title: 'Goals', url: '/goals', icon: 'flag', comingSoon: true, section: 0 },
     { title: 'Trade Trainer', url: '/trade-trainer', icon: 'trending-up', comingSoon: false, section: 0 },
     { title: 'Smart-Shopping', url: '/smart-shopping', icon: 'card', comingSoon: false, section: 0 },  
     { title: 'Plan An Event', url: '/event-planning', icon: 'wine', comingSoon: true, section: 0 },      

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Goal, GoalType } from '../models/goal';
 import { PlaidAccount, PlaidTransaction } from '../models/plaid';
 import { Product } from '../models/product';
 import { User } from '../models/user';
@@ -92,6 +93,37 @@ export class RestApiService {
 
   getAccountById(id: string) {
     return this.http.get<PlaidAccount>(this.apiHost + "/accounts/" + id);
+  }
+
+  getCategoriesWithNetAmount(accountIds: string[], startDate: Date, endDate: Date) {
+    if (startDate != null && endDate != null) {
+      let startDateParam = this.foundationService.formatDate(startDate);
+      let endDateParam = this.foundationService.formatDate(endDate);
+      return this.http.get<any>(this.apiHost + "/transactions/categories?accountIds=" + accountIds + "&start-date=" + startDateParam + "&end-date=" + endDateParam);
+    }
+    else {
+      return this.http.get<any>(this.apiHost + "/transactions/categories?accountIds=" + accountIds);
+    }
+  }
+
+  getGoals() {
+    return this.http.get<Goal[]>(this.apiHost + "/goals");
+  }
+
+  editGoal(goalId: string, goalObject: Goal) {
+    return this.http.put<void>(this.apiHost + "/goals/" + goalId, goalObject);
+  }
+
+  addGoal(goalObject: Goal) {
+    return this.http.post<void>(this.apiHost + "/goals", goalObject);
+  }
+
+  deleteGoal(goalId: string) {
+    return this.http.delete<void>(this.apiHost + "/goals/" + goalId);
+  }
+
+  getGoalTypes() {
+    return this.http.get<GoalType[]>(this.apiHost + "/goals/types");
   }
 
   getAmazonProductsByKeyword(keyword: string, page: number) {

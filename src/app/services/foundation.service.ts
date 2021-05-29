@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { Globals } from '../globals';
 import { PlaidAccount, PlaidTransaction } from '../models/plaid';
@@ -10,7 +11,9 @@ import { PlaidAccount, PlaidTransaction } from '../models/plaid';
 })
 export class FoundationService {
 
-    constructor(private globals: Globals, private alertController: AlertController) {}
+    constructor(private globals: Globals, 
+        private alertController: AlertController,
+        private messageService: MessageService) {}
 
     async presentErrorAlert(errorResponse: HttpErrorResponse) {
         let errorHeader = errorResponse.status != null ? errorResponse.status : errorResponse.error;

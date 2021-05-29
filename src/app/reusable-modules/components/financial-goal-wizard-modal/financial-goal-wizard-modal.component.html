@@ -1,0 +1,216 @@
+<ion-header class="modal-header" translucent>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button class="modal-close-button" (click)="closeModal()">
+        <ion-icon size="large" slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="flex-align-center modal-title">
+    <span size="large">Goal Wizard</span>
+  </div>
+</ion-header>
+<ion-content class="modal-content" padding>
+  <form *ngIf="currentPageIndex == 0 && !isLoading" [formGroup]="pageFormGroups[currentPageIndex]" class="full-height flex-align-center">
+    <ion-radio-group class="large-margin full-width flex-align-center" formControlName="goalType">
+      <ion-grid class="wizard-grid">
+        <ion-row>
+          <ion-col>
+            <span class="content-title">What type of goal do you want to start?</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="no-margin">
+          <ion-col>
+            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('category')">
+              <ion-card-header>
+                <ion-card-title class="flex-align-center">Budget By Category</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="flex-align-center">
+                <i class="fas fa-chart-pie fa-10x"></i>
+              </ion-card-content>
+              <ion-card-content class="text-align-center">
+                Track how you spend in a category and stay on track to keep that within your budget
+              </ion-card-content>
+              <ion-card-content class="flex-align-center">
+                <ion-radio value="category"></ion-radio>
+              </ion-card-content>
+              <ion-ripple-effect></ion-ripple-effect>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('savings')">
+              <ion-card-header>
+                <ion-card-title class="flex-align-center">Savings Goal</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="flex-align-center">
+                <i class="fas fa-piggy-bank fa-10x"></i>
+              </ion-card-content>
+              <ion-card-content class="text-align-center">
+                Track money saved until you've reached your desired saved amount
+              </ion-card-content>
+              <ion-card-content class="flex-align-center">
+                <ion-radio value="savings"></ion-radio>
+              </ion-card-content>
+              <ion-ripple-effect></ion-ripple-effect>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('debt')">
+              <ion-card-header>
+                <ion-card-title class="flex-align-center">Payoff Debt</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="flex-align-center">
+                <i class="fas fa-money-check-alt fa-10x"></i>
+              </ion-card-content>
+              <ion-card-content class="text-align-center">
+                Track debt paid off until you've reached your desired paid off amount
+              </ion-card-content>
+              <ion-card-content class="flex-align-center">
+                <ion-radio value="debt"></ion-radio>
+              </ion-card-content>
+              <ion-ripple-effect></ion-ripple-effect>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-radio-group>
+  </form>
+  <form *ngIf="currentPageIndex == 1 && !isLoading" [formGroup]="pageFormGroups[currentPageIndex]" class="full-height flex-align-center">
+    <ion-grid class="wizard-grid">
+      <ion-row>
+        <ion-col>
+          <span class="content-title">For how long do you want the time length of each budget session?</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p-dropdown
+            formControlName="timeframe"
+            placeholder="Select one..."
+            (onChange)="timeFrameChanged()"
+            [options]="availableBudgetTimeframes">
+          </p-dropdown>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider class="fixed-divider"></ion-item-divider>
+      <ion-row>
+        <ion-col>
+          <span class="content-title">Which category do you want to budget?</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p-dropdown
+            formControlName="category"
+            placeholder="Select one..."
+            [options]="availableBudgetCategories"
+            optionLabel="label"
+            optionValue="value">
+          </p-dropdown>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider class="fixed-divider"></ion-item-divider>
+      <ion-row>
+        <ion-col>
+          <span class="content-title">How much would you like to make your spending limit in this category?</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p-inputNumber 
+            formControlName="budget"
+            mode="currency" 
+            currency="USD" 
+            locale="en-US">
+          </p-inputNumber>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <form *ngIf="currentPageIndex == 2 && !isLoading" [formGroup]="pageFormGroups[currentPageIndex]" class="full-height flex-align-center">
+    <ion-grid class="wizard-grid">
+      <ion-row>
+        <ion-col>
+          <span class="content-title">Which is of your savings account that you want to track?</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p-dropdown
+            formControlName="account"
+            placeholder="Select one..."
+            [options]="availableSavingsBankAccounts"
+            optionLabel="label"
+            optionValue="value">
+          </p-dropdown>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider class="fixed-divider"></ion-item-divider>
+      <ion-row>
+        <ion-col>
+          <span class="content-title">How much would you like to save?</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p-inputNumber 
+            formControlName="amount"
+            mode="currency" 
+            currency="USD" 
+            locale="en-US">
+          </p-inputNumber>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider class="fixed-divider"></ion-item-divider>
+      <ion-row>
+        <ion-col>
+          <span class="content-title">What time range would you like to save this money?</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Today to&nbsp;
+          <p-calendar
+            [monthNavigator]="true" 
+            formControlName="endDate"
+            [yearNavigator]="true" 
+            dateFormat="mm/dd/yy"
+            [minDate]="currentDate"
+            [yearRange]="calendarYearRange"
+            [showIcon]="true">
+          </p-calendar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <form *ngIf="currentPageIndex == 999 && !isLoading" [formGroup]="finalPageFormGroup" class="full-height flex-align-center">
+    <ion-grid class="wizard-grid">
+      <ion-row>
+        <ion-col>
+          <span class="content-title">What would you like to name this goal?</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <input type="text" pInputText formControlName="name" />
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="previousPageIndexes.length != 0" (click)="onPreviousPage()">
+        <ion-icon name="arrow-back-outline"></ion-icon> Previous
+      </ion-button>
+      <ion-button *ngIf="!isNextComplete" (click)="onNextPage()">
+        Next <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="isNextComplete" color="primary" (click)="onComplete()">
+        Complete
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+<p-toast></p-toast>

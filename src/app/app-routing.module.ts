@@ -10,7 +10,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { SmartShoppingComponent } from './pages/smart-shopping/smart-shopping.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { TokenGuard } from './route-guards/token.guard';
-import { PlanComponent } from './pages/plan/plan.component';
+import { GoalsComponent } from './pages/goals/goals.component';
 
 const routes: Routes = [
   {
@@ -37,8 +37,8 @@ const routes: Routes = [
     canActivate: [TokenGuard]
   },
   {
-    path: 'plan',
-    component: PlanComponent,
+    path: 'goals',
+    component: GoalsComponent,
     canActivate: [TokenGuard]
   },
   {

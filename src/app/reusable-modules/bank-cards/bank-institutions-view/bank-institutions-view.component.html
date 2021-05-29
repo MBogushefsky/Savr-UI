@@ -1,6 +1,6 @@
 <ion-card *ngFor="let institution of plaidInstitutions | keyvalue">
   <ion-card-header class="flex-align-center">
-    <ion-card-title class="plaid-institution-sum">
+    <ion-card-title class="large-text">
       <span [class]="plaidInstitutionSums[institution.key] >= 0 ? 'positive-currency-amount' : 'negative-currency-amount'">
         <span *ngIf="plaidInstitutionSums[institution.key] < 0">-</span>{{ plaidInstitutionSums[institution.key] | currency }}
       </span>

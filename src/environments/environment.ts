@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiServer: "http://localhost:8080/savr-api",
-  presentationMode: true
+  presentationMode: false
 };
 
 /*

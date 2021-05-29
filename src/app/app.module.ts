@@ -24,11 +24,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BankAccountViewComponent } from './pages/bank-account-view/bank-account-view.component';
 import { RouterModule } from '@angular/router';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { BankInstitutionsViewComponent } from './reusable-modules/statistic-cards/bank-institutions-view/bank-institutions-view.component';
-import { BankAccountsViewComponent } from './reusable-modules/statistic-cards/bank-accounts-view/bank-accounts-view.component';
+import { BankInstitutionsViewComponent } from './reusable-modules/bank-cards/bank-institutions-view/bank-institutions-view.component';
+import { BankAccountsViewComponent } from './reusable-modules/bank-cards/bank-accounts-view/bank-accounts-view.component';
 import { AvailableFundsChartViewComponent } from './reusable-modules/charts/available-funds-chart-view/available-funds-chart-view.component';
-import { LineChartComponent } from './reusable-modules/generic-charts/line-chart/line-chart.component';
-import { PieChartComponent } from './reusable-modules/generic-charts/pie-chart/pie-chart.component';
+import { LineChartComponent } from './reusable-modules/generic-components/line-chart/line-chart.component';
+import { PieChartComponent } from './reusable-modules/generic-components/pie-chart/pie-chart.component';
 import { SpendingByCategoryViewComponent } from './reusable-modules/charts/spending-by-category-view/spending-by-category-view.component';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { SymbolPriceDataViewComponent } from './reusable-modules/charts/symbol-price-data-view/symbol-price-data-view.component';
@@ -39,13 +39,16 @@ import { SecuritySettingsComponent } from './pages/settings/security-settings/se
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
-import { UserPreferenceControlComponent } from './reusable-modules/user-preference-control/user-preference-control.component';
+import { UserPreferenceControlComponent } from './reusable-modules/components/user-preference-control/user-preference-control.component';
 import { ShoppingSearchedProductsViewComponent } from './reusable-modules/components/shopping-searched-products-view/shopping-searched-products-view.component';
 import { RatingModule } from 'primeng/rating';
-import { PlanComponent } from './pages/plan/plan.component';
+import { GoalsComponent } from './pages/goals/goals.component';
 import { KnobModule } from 'primeng/knob';
 import { GaugesModule } from '@progress/kendo-angular-gauges';
-
+import { FinancialGoalWizardModalComponent } from './reusable-modules/components/financial-goal-wizard-modal/financial-goal-wizard-modal.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,7 @@ import { GaugesModule } from '@progress/kendo-angular-gauges';
     SignUpComponent,
     HomeComponent,
     BreakdownComponent,
-    PlanComponent,
+    GoalsComponent,
     AvailableFundsChartViewComponent,
     SpendingByCategoryViewComponent,
     SymbolPriceDataViewComponent,
@@ -73,7 +76,8 @@ import { GaugesModule } from '@progress/kendo-angular-gauges';
     UserPreferenceControlComponent,
     NotificationSettingsComponent,
     SecuritySettingsComponent,
-    PlaidAccountModalComponent
+    PlaidAccountModalComponent,
+    FinancialGoalWizardModalComponent
   ],
   entryComponents: [],
   imports: [
@@ -95,12 +99,15 @@ import { GaugesModule } from '@progress/kendo-angular-gauges';
     CheckboxModule,
     RatingModule,
     KnobModule,
-    GaugesModule
+    GaugesModule,
+    ToastModule,
+    InputTextModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true },
-    Globals
+    Globals,
+    MessageService
   ],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Goals</ion-title>
+    <ion-buttons slot="end">
+      <ion-button shape="round" (click)="addFinancialGoal()">
+        <ion-icon name="add-outline"></ion-icon>
+        <span>Add Goal</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-content id="container">
+    <ion-card>
+      <ion-card-header class="flex-align-center large-text">
+        Goals
+      </ion-card-header>
+      <ion-item-divider class="fixed-divider"></ion-item-divider>
+      <ion-card-content class="flex-align-center" *ngFor="let goal of goals">
+        <ion-card *ngIf="goalToType[goal.typeId] == 'Category Budget'" class="full-width">
+          <ion-card-header class="flex-align-center">
+            {{ goal.name }}
+          </ion-card-header>
+          <ion-card-header class="flex-align-center">
+            {{ goal.values['startDate'] | date }}
+          </ion-card-header>
+          <ion-card-content class="flex-align-center">
+            <kendo-arcgauge [value]="guageValue" [colors]="guageColors">
+              <ng-template kendoArcGaugeCenterTemplate let-value="value">
+                <span class="guage-value">{{ value }}%</span>
+              </ng-template>
+            </kendo-arcgauge>
+          </ion-card-content>
+        </ion-card>
+        <ion-card *ngIf="goalToType[goal.typeId] == 'Savings'" class="full-width">
+          <ion-card-header class="flex-align-center">
+            <ion-card-title>
+              {{ goal.name }}
+            </ion-card-title>
+            <ion-card-subtitle>
+              {{ goal.values['endDate'] | date }}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="flex-align-center">
+            <kendo-arcgauge [value]="guageValue" [colors]="guageColors">
+              <ng-template kendoArcGaugeCenterTemplate let-value="value">
+                <span class="guage-value">{{ value }}%</span>
+              </ng-template>
+            </kendo-arcgauge>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ion-content>

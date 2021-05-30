@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Goal, GoalType } from 'src/app/models/goal';
 import { PlaidAccount } from 'src/app/models/plaid';
 import { RestApiService } from 'src/app/services/rest-api.service';
@@ -12,6 +12,9 @@ import { RestApiService } from 'src/app/services/rest-api.service';
   styleUrls: ['./financial-goal-wizard-modal.component.scss'],
 })
 export class FinancialGoalWizardModalComponent implements OnInit {
+  @Input('goalId') goalId: string;
+
+  edittingGoal: Goal;
 
   currentPageIndex: number = 0;
   previousPageIndexes = [];
@@ -35,6 +38,13 @@ export class FinancialGoalWizardModalComponent implements OnInit {
     })
   ];
 
+  stepMenu: MenuItem[] = [
+    {label: 'Goal Type'},
+    {label: 'Goal Requirements'},
+    {label: 'Name of Goal'}
+  ];
+  activeStep: number = 0;
+
   finalPageFormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
   });
@@ -43,6 +53,7 @@ export class FinancialGoalWizardModalComponent implements OnInit {
   calendarYearRange: string = this.currentDate.getFullYear() + ':2100';
 
   goalTypes: GoalType[];
+  goalToType: { [id: string]: string } = {};
   bankAccounts: PlaidAccount[];
 
   availableBudgetTimeframes = ['1 Week', '2 Weeks', '1 Month', '2 Months', '3 Months'];
@@ -59,10 +70,36 @@ export class FinancialGoalWizardModalComponent implements OnInit {
     this.restApiService.getGoalTypes().subscribe(
       (returnedData: GoalType[]) => {
         this.goalTypes = returnedData;
+        for (let goalType of this.goalTypes) {
+          this.goalToType[goalType.Id] = goalType.name;
+        }
         this.restApiService.getAccounts().subscribe(
           (accounts: PlaidAccount[]) => {
             this.bankAccounts = accounts;
-            this.isLoading = false;
+            if (this.goalId != null) {
+              this.restApiService.getGoalById(this.goalId).subscribe(
+                (returnedGoal: Goal) => {
+                  this.edittingGoal = returnedGoal;
+                  let goalTypeName = this.goalToType[this.edittingGoal.typeId];
+                  this.pageFormGroups[0].get('goalType').patchValue(goalTypeName);
+                  this.finalPageFormGroup.get('name').patchValue(this.edittingGoal.name);
+                  if (goalTypeName == 'Category Budget') {
+                    this.pageFormGroups[1].patchValue(this.edittingGoal.values);
+                  }
+                  else if (goalTypeName == 'Savings') {
+                    this.pageFormGroups[2].patchValue(this.edittingGoal.values);
+                  }
+                  else if (goalTypeName == 'Debt Payoff') {
+    
+                  }
+                  this.onNextPage(false);
+                  this.isLoading = false;
+                }
+              );
+            }
+            else {
+              this.isLoading = false;
+            }
           }
         );
       }
@@ -78,20 +115,23 @@ export class FinancialGoalWizardModalComponent implements OnInit {
     this.previousPageIndexes.splice(this.previousPageIndexes.length - 1, 1);
     this.isNextComplete = this.previousPageIsNextComplete[this.previousPageIsNextComplete.length - 1];
     this.previousPageIsNextComplete.splice(this.previousPageIsNextComplete.length - 1, 1);
+    this.getActiveStep();
   }
 
-  onNextPage() {
+  onNextPage(breadcrumb: boolean) {
     if (this.currentPageIndex != 999 && this.pageFormGroups[this.currentPageIndex].valid) {
-      this.previousPageIndexes.push(this.currentPageIndex);
-      this.previousPageIsNextComplete.push(this.isNextComplete);
+      if (breadcrumb == true) {
+        this.previousPageIndexes.push(this.currentPageIndex);
+        this.previousPageIsNextComplete.push(this.isNextComplete);
+      }
       if (this.currentPageIndex == 0) {
         let goalType = this.pageFormGroups[this.currentPageIndex].get('goalType').value;
-        if (goalType == 'category') {
+        if (goalType == 'Category Budget') {
           this.currentPageIndex = 1;
           this.isLoading = true;
           this.timeFrameChanged();
         }
-        else if (goalType == 'savings') {
+        else if (goalType == 'Savings') {
           this.currentPageIndex = 2;
           this.availableSavingsBankAccounts = this.bankAccounts.map(
             (account: PlaidAccount) => { 
@@ -108,7 +148,7 @@ export class FinancialGoalWizardModalComponent implements OnInit {
             this.pageFormGroups[this.currentPageIndex].get('account').patchValue(savingsAccount.value);
           }
         }
-        else if (goalType == 'debt') {
+        else if (goalType == 'Debt Payoff') {
           this.currentPageIndex = 999;
         }
       }
@@ -120,33 +160,32 @@ export class FinancialGoalWizardModalComponent implements OnInit {
     else {
       this.messageService.add({severity:'error', summary:'Invalid Form'});
     }
+    this.getActiveStep();
   }
 
   onComplete() {
     if (this.currentPageIndex == 999 && this.finalPageFormGroup.valid) {
       let goalType = this.pageFormGroups[0].get('goalType').value;
       let goalName = this.finalPageFormGroup.get('name').value;
-      if (goalType == 'category') {
+      let goalToSave: Goal;
+      if (goalType == 'Category Budget') {
         let pageFieldValues = this.pageFormGroups[1].value;
-        let goalToSave: Goal = {
+        goalToSave = {
           Id: null,
           typeId: this.goalTypes.find((type) => type.name == 'Category Budget').Id,
           name: goalName,
           values: {
             timeframe: pageFieldValues.timeframe,
             category: pageFieldValues.category,
-            budget: pageFieldValues.budget
+            budget: pageFieldValues.budget,
+            startDate: (new Date()).toISOString(),
           }
         };
-        this.restApiService.addGoal(goalToSave).subscribe(
-          (returnedData: void) => {
-            this.closeModal();
-          }
-        );
+        
       }
-      else if (goalType == 'savings') {
+      else if (goalType == 'Savings') {
         let pageFieldValues = this.pageFormGroups[2].value;
-        let goalToSave: Goal = {
+        goalToSave = {
           Id: null,
           typeId: this.goalTypes.find((type) => type.name == 'Savings').Id,
           name: goalName,
@@ -157,14 +196,23 @@ export class FinancialGoalWizardModalComponent implements OnInit {
             endDate: pageFieldValues.endDate,
           }
         };
+      }
+      else if (goalType == 'Debt Payoff') {
+  
+      }
+      if (this.goalId == null) {
         this.restApiService.addGoal(goalToSave).subscribe(
           (returnedData: void) => {
             this.closeModal();
           }
         );
       }
-      else if (goalType == 'debt') {
-  
+      else {
+        this.restApiService.editGoal(this.goalId, goalToSave).subscribe(
+          (returnedData: void) => {
+            this.closeModal();
+          }
+        );
       }
     }
     else {
@@ -220,6 +268,21 @@ export class FinancialGoalWizardModalComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  getActiveStep() {
+    if (this.currentPageIndex == 0) {
+      this.activeStep = 0;
+    }
+    else if (this.currentPageIndex == 1 || this.currentPageIndex == 2) {
+      this.activeStep = 1;
+    }
+    else if (this.currentPageIndex == 999) {
+      this.activeStep = 2;
+    }
+    else {
+      this.activeStep = 0;
+    }
   }
 
   closeModal() {

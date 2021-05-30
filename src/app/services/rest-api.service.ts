@@ -110,6 +110,10 @@ export class RestApiService {
     return this.http.get<Goal[]>(this.apiHost + "/goals");
   }
 
+  getGoalById(id: string) {
+    return this.http.get<Goal>(this.apiHost + "/goals/" + id);
+  }
+
   editGoal(goalId: string, goalObject: Goal) {
     return this.http.put<void>(this.apiHost + "/goals/" + goalId, goalObject);
   }

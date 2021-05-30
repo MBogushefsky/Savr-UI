@@ -49,6 +49,8 @@ import { FinancialGoalWizardModalComponent } from './reusable-modules/components
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
+import { StepsModule } from 'primeng/steps';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import { InputTextModule } from 'primeng/inputtext';
     KnobModule,
     GaugesModule,
     ToastModule,
-    InputTextModule
+    InputTextModule,
+    StepsModule,
+    MenuModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

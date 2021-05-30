@@ -22,28 +22,59 @@
       <ion-item-divider class="fixed-divider"></ion-item-divider>
       <ion-card-content class="flex-align-center" *ngFor="let goal of goals">
         <ion-card *ngIf="goalToType[goal.typeId] == 'Category Budget'" class="full-width">
-          <ion-card-header class="flex-align-center">
+          <ion-card-header class="full-width">
+            <div class="float-right">
+              <button type="button" pButton icon="pi pi-bars" label="Options" (click)="onSelectedGoalMenu(goal);menu.toggle($event)"></button>
+              <p-menu #menu appendTo="body" [popup]="true" [model]="goalMenu"></p-menu>
+            </div>
+          </ion-card-header>
+          <ion-card-header class="flex-align-center full-width">
             {{ goal.name }}
           </ion-card-header>
-          <ion-card-header class="flex-align-center">
-            {{ goal.values['startDate'] | date }}
+          <ion-card-header class="flex-align-center full-width">
+            Type: {{ goalToType[goal.typeId] }}
           </ion-card-header>
-          <ion-card-content class="flex-align-center">
-            <kendo-arcgauge [value]="guageValue" [colors]="guageColors">
-              <ng-template kendoArcGaugeCenterTemplate let-value="value">
-                <span class="guage-value">{{ value }}%</span>
-              </ng-template>
-            </kendo-arcgauge>
+          <ion-card-header class="flex-align-center full-width">
+            Budget Period Ends: {{ goal.values['calendarAwayFromEndDate'] }}
+          </ion-card-header>
+          <ion-card-content class="flex-align-center medium-vertical-margin">
+            <div style="width: 25%;">
+              <div class="flex-align-center guage-title">Budget Remaining Amount</div>
+              <kendo-arcgauge
+                [value]="goal.values['availableOfBudget']"
+                [transitions]="false"
+                class="display-block"
+                [colors]="goal.values['guageColors']"
+                [scale]="{ max: goal.values['budget'] }">
+                <ng-template kendoArcGaugeCenterTemplate let-value="value">
+                  <span class="guage-value">{{ value | number: '1.2-2'}}</span>
+                </ng-template>
+                <kendo-arcgauge-scale
+                  [majorTicks]="{ visible: true }"
+                  [minorTicks]="{ visible: true }"
+                  rangePlaceholderColor="#e6e5e5"
+                  rangeLineCap="round">
+                  <kendo-arcgauge-scale-labels format="c" [visible]="true"></kendo-arcgauge-scale-labels>
+                </kendo-arcgauge-scale>
+              </kendo-arcgauge>
+            </div>
           </ion-card-content>
         </ion-card>
         <ion-card *ngIf="goalToType[goal.typeId] == 'Savings'" class="full-width">
-          <ion-card-header class="flex-align-center">
-            <ion-card-title>
-              {{ goal.name }}
-            </ion-card-title>
-            <ion-card-subtitle>
-              {{ goal.values['endDate'] | date }}
-            </ion-card-subtitle>
+          <ion-card-header class="full-width">
+            <div class="float-right">
+              <button type="button" pButton icon="pi pi-bars" label="Options" (click)="onSelectedGoalMenu(goal);menu.toggle($event)"></button>
+              <p-menu #menu appendTo="body" [popup]="true" [model]="goalMenu"></p-menu>
+            </div>
+          </ion-card-header>
+          <ion-card-header class="flex-align-center full-width">
+            {{ goal.name }}
+          </ion-card-header>
+          <ion-card-header class="flex-align-center full-width">
+            Type: {{ goalToType[goal.typeId] }}
+          </ion-card-header>
+          <ion-card-header class="flex-align-center full-width">
+            Goal Ends: {{ goal.values['calendarAwayFromEndDate'] }}
           </ion-card-header>
           <ion-card-content class="flex-align-center">
             <kendo-arcgauge [value]="guageValue" [colors]="guageColors">

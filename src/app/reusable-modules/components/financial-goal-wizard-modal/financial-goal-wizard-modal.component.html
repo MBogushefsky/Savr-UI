@@ -9,6 +9,9 @@
   <div class="flex-align-center modal-title">
     <span size="large">Goal Wizard</span>
   </div>
+  <div class="step-menu-area">
+    <p-steps [model]="stepMenu" [activeIndex]="activeStep"></p-steps>
+  </div>
 </ion-header>
 <ion-content class="modal-content" padding>
   <form *ngIf="currentPageIndex == 0 && !isLoading" [formGroup]="pageFormGroups[currentPageIndex]" class="full-height flex-align-center">
@@ -21,7 +24,7 @@
         </ion-row>
         <ion-row class="no-margin">
           <ion-col>
-            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('category')">
+            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('Category Budget')">
               <ion-card-header>
                 <ion-card-title class="flex-align-center">Budget By Category</ion-card-title>
               </ion-card-header>
@@ -32,13 +35,13 @@
                 Track how you spend in a category and stay on track to keep that within your budget
               </ion-card-content>
               <ion-card-content class="flex-align-center">
-                <ion-radio value="category"></ion-radio>
+                <ion-radio value="Category Budget"></ion-radio>
               </ion-card-content>
               <ion-ripple-effect></ion-ripple-effect>
             </ion-card>
           </ion-col>
           <ion-col>
-            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('savings')">
+            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('Savings')">
               <ion-card-header>
                 <ion-card-title class="flex-align-center">Savings Goal</ion-card-title>
               </ion-card-header>
@@ -49,13 +52,13 @@
                 Track money saved until you've reached your desired saved amount
               </ion-card-content>
               <ion-card-content class="flex-align-center">
-                <ion-radio value="savings"></ion-radio>
+                <ion-radio value="Savings"></ion-radio>
               </ion-card-content>
               <ion-ripple-effect></ion-ripple-effect>
             </ion-card>
           </ion-col>
           <ion-col>
-            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('debt')">
+            <ion-card class="tile-card ion-activatable ripple-parent" (click)="onTileClick('Debt Payoff')">
               <ion-card-header>
                 <ion-card-title class="flex-align-center">Payoff Debt</ion-card-title>
               </ion-card-header>
@@ -66,7 +69,7 @@
                 Track debt paid off until you've reached your desired paid off amount
               </ion-card-content>
               <ion-card-content class="flex-align-center">
-                <ion-radio value="debt"></ion-radio>
+                <ion-radio value="Debt Payoff"></ion-radio>
               </ion-card-content>
               <ion-ripple-effect></ion-ripple-effect>
             </ion-card>
@@ -204,7 +207,7 @@
       <ion-button *ngIf="previousPageIndexes.length != 0" (click)="onPreviousPage()">
         <ion-icon name="arrow-back-outline"></ion-icon> Previous
       </ion-button>
-      <ion-button *ngIf="!isNextComplete" (click)="onNextPage()">
+      <ion-button *ngIf="!isNextComplete" (click)="onNextPage(true)">
         Next <ion-icon name="arrow-forward-outline"></ion-icon>
       </ion-button>
       <ion-button *ngIf="isNextComplete" color="primary" (click)="onComplete()">

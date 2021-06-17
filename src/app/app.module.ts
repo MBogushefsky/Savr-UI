@@ -52,6 +52,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { StepsModule } from 'primeng/steps';
 import { MenuModule } from 'primeng/menu';
 import { AccordionComponent } from './reusable-modules/generic-components/accordion/accordion.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { AccordionComponent } from './reusable-modules/generic-components/accord
     ToastModule,
     InputTextModule,
     StepsModule,
-    MenuModule
+    MenuModule,
+    FontAwesomeModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

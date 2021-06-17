@@ -1,27 +1,65 @@
 <ion-content [fullscreen]="true" id="container" class="flex-align-center">
-  <div class="login-area">
-    <div class="xs-small-vertical-margin flex-align-center little-bottom-padding black-color">
-      <img class="small-logo-icon" src="assets/leaf-icon-small.png">
-      <span class="login-title">Frugal</span>
+  <div class="centered-area">
+    <div class="login-area">
+      <div class="page-header">
+        <div class="site-logo flex-align-center">
+          <img class="small-logo-icon" src="assets/leaf-icon-small.png">
+          <span class="page-header-title site-title">Frugal</span>
+        </div>
+        <div class="page-title flex-align-center">
+          <span class="page-header-title login-title">Login</span>
+        </div>
+      </div>
+      <form [formGroup]="loginFormGroup" class="login-input-area">
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': loginFormGroup.get('username').invalid && 
+              (loginFormGroup.get('username').dirty || loginFormGroup.get('username').touched)}" 
+            class="login-input" 
+            (keyup.enter)="onLogin()" 
+            type="text" 
+            placeholder="Username" 
+            pInputText 
+            formControlName="username"> 
+            <i *ngIf="loginFormGroup.get('username').value != ''" 
+              (click)="loginFormGroup.get('username').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+            </i>
+        </div>
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': loginFormGroup.get('password').invalid && 
+              (loginFormGroup.get('password').dirty || loginFormGroup.get('password').touched)}" 
+            class="login-input" 
+            (keyup.enter)="onLogin()" 
+            type="password" 
+            placeholder="Password" 
+            pInputText 
+            formControlName="password"> 
+            <i *ngIf="loginFormGroup.get('password').value != ''" 
+              (click)="loginFormGroup.get('password').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+            </i>
+        </div>
+        <div>
+          <ion-button [disabled]="loggingIn" 
+            (click)="onLogin()" 
+            class="login-action border-radius-none" 
+            color="primary">
+            <span *ngIf="!loggingIn" class="flex-align-center">
+              Login&nbsp;<ion-icon name="finger-print-outline"></ion-icon>
+            </span>
+            <span *ngIf="loggingIn" class="flex-align-center">
+              <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
+            </span>
+          </ion-button>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/sign-up']" 
+            class="login-action bottom-border-radius-small" 
+            color="secondary">
+            Sign Up
+          </ion-button>
+        </div>
+      </form>
     </div>
-    <ion-grid class="login-input-area">
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="floating">Username</ion-label>
-            <ion-input [value]="username" (keyup.enter)="onLogin()" (input)="onUsernameChange($event)" class="login-input" type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-input [value]="password" (keyup.enter)="onLogin()" (input)="onPasswordChange($event)" class="login-input" type="password" placeholder="Password"></ion-input></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-button (click)="onLogin()" class="login-action" color="primary">Login&nbsp;<ion-icon name="finger-print-outline"></ion-icon></ion-button></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-button [routerLink]="['/sign-up']" class="login-action" color="secondary">Sign Up</ion-button></ion-col>
-      </ion-row>
-    </ion-grid>
   </div>
 </ion-content>

@@ -37,7 +37,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(new Date().getTimezoneOffset());
   }
 
   onLogout() {

@@ -124,10 +124,6 @@ ion-spinner {
   padding-right: 0;
 }
 
-.little-bottom-padding {
-  padding-bottom: 1rem;
-}
-
 .lifted-divider {
   margin-top: -2rem;
 }
@@ -146,11 +142,6 @@ ion-spinner {
 
 .large-margin {
   margin: 5rem;
-}
-
-.xs-small-vertical-margin {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .medium-vertical-margin {
@@ -223,10 +214,58 @@ ion-card-header {
   font-size: 2rem;
 }
 
+.pi.clear-input-icon {
+  cursor: pointer;
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+}
+
+.pi.loading-input-icon {
+  cursor: default;
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+}
+
+.pi.accepted-input-icon {
+  cursor: pointer;
+  color: green !important;
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+}
+
 .incomplete-area {
   opacity: 0.35;
 }
 
 .large-text {
   font-size: 3rem;
+}
+
+.p-inputtext::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
+
+.invalid-state-input {
+  border: 1px solid #e50000 !important;
+}
+
+.valid-state-input {
+  color: green;
+}
+
+.invalid-state-input {
+  color: #e50000;
+}
+
+.invalid-state-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #e50000;
+  opacity: 1; /* Firefox */
+}
+
+.invalid-state-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #e50000;
+}
+
+.invalid-state-input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #e50000;
 }

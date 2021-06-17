@@ -25,6 +25,10 @@ export class RestApiService {
     return this.http.put<boolean>(this.apiHost + "/sign-up", user);
   }
 
+  isUsernameAvailable(username: string): Observable<boolean> {
+    return this.http.get<boolean>(this.apiHost + "/sign-up/username-available?request-username=" + username);
+  }
+
   uploadProfileImage(imageFormData: FormData) {
     return this.http.post<any>(this.apiHost + "/profile/image", imageFormData);
   }

@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user';
 import { FoundationService } from 'src/app/services/foundation.service';
 import { EncryptionService } from 'src/app/services/encryption.service';
 import { RestApiService } from 'src/app/services/rest-api.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,13 @@ import { RestApiService } from 'src/app/services/rest-api.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  username: string = "";
-  password: string = "";
+
+  loginFormGroup = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
+  })
+
+  loggingIn: boolean = false;
 
   constructor(private restApiService: RestApiService, 
     private storage: Storage, 
@@ -26,28 +32,29 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
-  onUsernameChange(event: any) {
-    this.username = event.target.value;
-  }
-
-  onPasswordChange(event: any) {
-    this.password = event.target.value;
-  }
-
   onLogin() {
-    this.restApiService.login(this.username, this.encryptionService.encrypt(this.password)).subscribe(
+    if (!this.loginFormGroup.valid) {
+      this.foundationService.presentBasicAlert("Please fill in both username and password", "");
+      return;
+    }
+    this.loggingIn = true;
+    this.restApiService.login(this.loginFormGroup.get('username').value, 
+      this.encryptionService.encrypt(this.loginFormGroup.get('password').value)).subscribe(
       (returnedUser: User) => {
         this.storage.set("CurrentUser", JSON.stringify(returnedUser));
         this.globals.setCurrentUser(returnedUser);
         this.router.navigate(['/home']);
+        this.loggingIn = false;
       },
       (error: HttpErrorResponse) => {
         if (error.status == 404) {
-          this.foundationService.presentBasicAlert("Invalid Login", "Could not find an account with these credentials");
+          this.foundationService.presentBasicAlert("The given username and password is incorrent", "");
+          this.loginFormGroup.get('password').setValue('');
         }
         else {
           this.foundationService.presentBasicAlert("Something went wrong", "Please try again later");
         }
+        this.loggingIn = false;
       }
     );
   }

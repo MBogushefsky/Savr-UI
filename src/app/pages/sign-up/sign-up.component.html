@@ -1,32 +1,138 @@
 <ion-content [fullscreen]="true" id="container" class="flex-align-center">
-  <form [formGroup]="signUpFormGroup">
-    <ion-grid class="login-input-area">
-      <ion-row>
-        <ion-col>
+  <div class="centered-area">
+    <div class="sign-up-area">
+      <div class="page-header">
+        <div class="site-logo flex-align-center">
           <img class="small-logo-icon" src="assets/leaf-icon-small.png">
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-input formControlName="firstName" (keyup.enter)="onSignUp()" class="login-input" type="text" placeholder="First Name"></ion-input></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-input formControlName="lastName" (keyup.enter)="onSignUp()" class="login-input" type="text" placeholder="Last Name"></ion-input></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-input formControlName="email" (keyup.enter)="onSignUp()" class="login-input" type="email" placeholder="Email"></ion-input></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-input formControlName="username" (keyup.enter)="onSignUp()" class="login-input" type="text" placeholder="Username"></ion-input></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-input formControlName="password" (keyup.enter)="onSignUp()" class="login-input" type="password" placeholder="Password"></ion-input></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-input formControlName="confirmPassword" (keyup.enter)="onSignUp()" class="login-input" type="password" placeholder="Confirm Password"></ion-input></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><ion-button (click)="onSignUp()" class="login-action" color="secondary">Sign Up</ion-button></ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+          <span class="page-header-title site-title">Frugal</span>
+        </div>
+        <div class="page-title flex-align-center">
+          <span class="page-header-title sign-up-title">Free Sign Up</span>
+        </div>
+      </div>
+      <form [formGroup]="signUpFormGroup" class="sign-up-input-area">
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': signUpFormGroup.get('firstName').invalid && 
+              (signUpFormGroup.get('firstName').dirty || signUpFormGroup.get('firstName').touched)}" 
+            class="sign-up-input" 
+            (keyup.enter)="onSignUp()" 
+            type="text" 
+            placeholder="First Name" 
+            pInputText 
+            formControlName="firstName"> 
+            <i *ngIf="signUpFormGroup.get('firstName').value != ''" 
+              (click)="signUpFormGroup.get('firstName').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+            </i>
+        </div>
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': signUpFormGroup.get('lastName').invalid && 
+              (signUpFormGroup.get('lastName').dirty || signUpFormGroup.get('lastName').touched)}" 
+            class="sign-up-input" 
+            (keyup.enter)="onSignUp()" 
+            type="text" 
+            placeholder="Last Name" 
+            pInputText 
+            formControlName="lastName"> 
+            <i *ngIf="signUpFormGroup.get('lastName').value != ''" 
+              (click)="signUpFormGroup.get('lastName').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+            </i>
+        </div>
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': signUpFormGroup.get('email').invalid && 
+              (signUpFormGroup.get('email').dirty || signUpFormGroup.get('email').touched)}" 
+            class="sign-up-input" 
+            (keyup.enter)="onSignUp()" 
+            type="email" 
+            placeholder="Email" 
+            pInputText 
+            formControlName="email"> 
+            <i *ngIf="signUpFormGroup.get('email').value != ''" 
+              (click)="signUpFormGroup.get('email').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+            </i>
+        </div>
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': signUpFormGroup.get('username').invalid && 
+              (signUpFormGroup.get('username').dirty || signUpFormGroup.get('username').touched), 
+              'valid-state-input': signUpFormGroup.get('username').valid && isInputtedUsernameAvailable}" 
+            class="sign-up-input" 
+            (keyup.enter)="onSignUp()" 
+            type="text" 
+            placeholder="Username" 
+            pInputText 
+            formControlName="username"> 
+            <i *ngIf="signUpFormGroup.get('username').value != '' && 
+              !checkingIfInputtedUsernameIsAvailable && !isInputtedUsernameAvailable"
+              (click)="signUpFormGroup.get('username').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+              <span *ngIf="!signUpFormGroup.get('username').valid && didCheckIfInputtedUsernameIsAvailable" 
+                class="unavailable-text">
+                Unavailable
+              </span>
+            </i>
+            <ng-container *ngIf="signUpFormGroup.get('username').valid">
+              <i *ngIf="checkingIfInputtedUsernameIsAvailable" 
+                class="pi pi-spin pi-spinner loading-input-icon">
+              </i>
+              <i *ngIf="didCheckIfInputtedUsernameIsAvailable && isInputtedUsernameAvailable" 
+                title="Username is available"
+                class="pi pi-check-circle accepted-input-icon">
+              </i>
+            </ng-container>
+            
+        </div>
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': signUpFormGroup.get('password').invalid && 
+              (signUpFormGroup.get('password').dirty || signUpFormGroup.get('password').touched)}" 
+            class="sign-up-input" 
+            (keyup.enter)="onSignUp()" 
+            type="password" 
+            placeholder="Password" 
+            pInputText 
+            formControlName="password"> 
+            <i *ngIf="signUpFormGroup.get('password').value != ''" 
+              (click)="signUpFormGroup.get('password').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+            </i>
+        </div>
+        <div class="p-input-icon-right full-width">
+          <input [ngClass]="{'invalid-state-input': signUpFormGroup.get('confirmPassword').invalid && 
+              (signUpFormGroup.get('confirmPassword').dirty || signUpFormGroup.get('confirmPassword').touched)}" 
+            class="sign-up-input" 
+            (keyup.enter)="onSignUp()" 
+            type="password" 
+            placeholder="Confirm Password" 
+            pInputText 
+            formControlName="confirmPassword"> 
+            <i *ngIf="signUpFormGroup.get('confirmPassword').value != ''" 
+              (click)="signUpFormGroup.get('confirmPassword').setValue('')" 
+              class="pi pi-times-circle clear-input-icon">
+            </i>
+        </div>
+        <div>
+          <ion-button [disabled]="isLoading" 
+            [disabled]="true"
+            (click)="onSignUp()" 
+            class="sign-up-action border-radius-none" 
+            color="primary">
+            <span *ngIf="!isLoading" class="flex-align-center">
+              (Sign Up Under Construction)
+            </span>
+            <span *ngIf="isLoading" class="flex-align-center">
+              <ion-spinner class="inner-spinner" name="bubbles"></ion-spinner>
+            </span>
+          </ion-button>
+        </div>
+        <div>
+          <ion-button [routerLink]="['/login']" 
+            class="sign-up-action bottom-border-radius-small" 
+            color="secondary">
+            Go To Login
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
 </ion-content>

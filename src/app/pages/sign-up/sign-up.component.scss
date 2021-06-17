@@ -2,38 +2,108 @@
     width: 100%;
 }
 
-.login-input-area {
-    margin-top: 10vh;
-    max-width: 400px;
+.centered-area {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    max-width: 40rem;
 }
 
-.login-input-area ion-row:first-child {
-    margin-bottom: 0.5rem;
+.sign-up-area {
+    background-color: white;
+    margin: 1rem;
+    padding: 0;
+    border-radius: 1rem;
 }
 
-.login-input-area ion-row:nth-child(2), .login-input-area ion-row:nth-child(3) {
+.page-header {
+    z-index: 1;
+    position: relative;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+    box-shadow: 0 2rem 2rem rgb(0 0 0 / 10%);
+}
+
+.site-logo {
+    padding-bottom: 2rem;
+}
+
+.page-title {
+    padding-bottom: 0;
+}
+
+.page-header-title {
+    padding-left: 0.75rem;
+    color: #606060;
+    font-family: 'Roboto';
+    letter-spacing: 1.5px;
+    font-weight: normal;
+}
+
+.site-title {
+    font-size: 3rem;
+}
+
+.sign-up-title {
+    font-size: 2rem;
+}
+
+.sign-up-input-area {
+    width: 100%;
+    padding: 0;
+}
+
+.sign-up-input-area div:first-child, .sign-up-input-area div:nth-child(2) {
     height: 25%;
 }
 
-.login-input-area ion-row:nth-child(4), .login-input-area ion-row:last-child {
+.sign-up-input-area div:nth-child(3), .sign-up-input-area div:last-child {
     height: 20%;
 }
 
-.login-input-area ion-col {
+.sign-up-input-area div {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
 }
 
-.login-input {
-    width: 90%;
-    text-align: center;
-    border: 1px solid black;
-    border-radius: 10px !important;
-    border: 1px solid #f1f1f1 !important;
-    --background: rgb(219,219,219) !important;
-}
-
-.login-action {
+.sign-up-input.p-inputtext {
     width: 100%;
+    height: 5rem;
+    border: none;
+    font-size: 1.25rem;
+    text-align: left;
+    box-shadow: none;
+    padding: 0.5rem 1rem !important;
+}
+
+.sign-up-input.p-inputtext:enabled:focus {
+    border: 0;
+    box-shadow: none;
+}
+
+.sign-up-action {
+    font-size: 1.5rem;
+    height: 5rem;
+    width: 100%;
+    margin: 0;
+}
+
+.border-radius-none {
+    --border-radius: 0;
+}
+
+.bottom-border-radius-small {
+    --border-radius: 0 0 1rem 1rem;
+}
+
+.inner-spinner {
+    transform: scale(2);
+}
+
+.unavailable-text::before {
+    text-decoration-style: solid;
+    font-family: 'Roboto';
 }

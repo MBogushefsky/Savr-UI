@@ -51,6 +51,7 @@ import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { StepsModule } from 'primeng/steps';
 import { MenuModule } from 'primeng/menu';
+import { AccordionComponent } from './reusable-modules/generic-components/accordion/accordion.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { MenuModule } from 'primeng/menu';
     NotificationSettingsComponent,
     SecuritySettingsComponent,
     PlaidAccountModalComponent,
-    FinancialGoalWizardModalComponent
+    FinancialGoalWizardModalComponent,
+    AccordionComponent
   ],
   entryComponents: [],
   imports: [

@@ -2,8 +2,14 @@
   --modal-header-height: var(--height) * 0.1;
 }*/
 
-ion-content {
-  --background: url("~/assets/background.png");
+// ion-content {
+//   --background: url("~/assets/background.png");
+// }
+
+app-login ion-content, app-sign-up ion-content {
+  --background: rgb(97, 206, 112);
+  --background: linear-gradient(180deg, rgba(97, 206, 112, 1) 0%, rgba(8, 170, 151, 1) 90%);
+  color: white;
 }
 
 ion-backdrop {
@@ -101,6 +107,14 @@ ion-spinner {
   text-align: center;
 }
 
+.white-color {
+  color: white;
+}
+
+.black-color {
+  color: black;
+}
+
 .no-padding {
   padding: 0;
 }
@@ -108,6 +122,10 @@ ion-spinner {
 .no-side-to-side-padding {
   padding-left: 0;
   padding-right: 0;
+}
+
+.little-bottom-padding {
+  padding-bottom: 1rem;
 }
 
 .lifted-divider {
@@ -128,6 +146,11 @@ ion-spinner {
 
 .large-margin {
   margin: 5rem;
+}
+
+.xs-small-vertical-margin {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .medium-vertical-margin {

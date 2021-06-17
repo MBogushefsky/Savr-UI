@@ -1,21 +1,27 @@
 <ion-content [fullscreen]="true" id="container" class="flex-align-center">
-  <ion-grid class="login-input-area">
-    <ion-row>
-      <ion-col>
-        <img class="small-logo-icon" src="assets/leaf-icon-small.png">
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><ion-input [value]="username" (keyup.enter)="onLogin()" (input)="onUsernameChange($event)" class="login-input" type="text" placeholder="Username"></ion-input></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><ion-input [value]="password" (keyup.enter)="onLogin()" (input)="onPasswordChange($event)" class="login-input" type="password" placeholder="Password"></ion-input></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><ion-button (click)="onLogin()" class="login-action" color="primary">Login&nbsp;<ion-icon name="finger-print-outline"></ion-icon></ion-button></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col><ion-button [routerLink]="['/sign-up']" class="login-action" color="secondary">Sign Up</ion-button></ion-col>
-    </ion-row>
-  </ion-grid>
+  <div class="login-area">
+    <div class="xs-small-vertical-margin flex-align-center little-bottom-padding black-color">
+      <img class="small-logo-icon" src="assets/leaf-icon-small.png">
+      <span class="login-title">Frugal</span>
+    </div>
+    <ion-grid class="login-input-area">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input [value]="username" (keyup.enter)="onLogin()" (input)="onUsernameChange($event)" class="login-input" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-input [value]="password" (keyup.enter)="onLogin()" (input)="onPasswordChange($event)" class="login-input" type="password" placeholder="Password"></ion-input></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-button (click)="onLogin()" class="login-action" color="primary">Login&nbsp;<ion-icon name="finger-print-outline"></ion-icon></ion-button></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col><ion-button [routerLink]="['/sign-up']" class="login-action" color="secondary">Sign Up</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

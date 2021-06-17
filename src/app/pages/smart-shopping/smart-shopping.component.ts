@@ -19,6 +19,7 @@ export class SmartShoppingComponent implements OnInit {
   loadingWalmartSearch: boolean = false;
 
   showSearches: string[] = [];
+  searchSettingsExpanded: boolean = false;
 
   constructor(private restApiService: RestApiService) { }
 

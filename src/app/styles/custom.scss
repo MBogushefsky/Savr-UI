@@ -30,6 +30,18 @@ ion-chip ion-label {
   overflow: visible !important;
 }
 
+.browser-app-platform ion-segment-button {
+  --border-radius: 1rem 1rem 0 0;
+  --border-width: 1px;
+  //--color-checked: white;
+  //--background-checked: var(--color-checked);
+}
+
+.mobile-app-platform ion-segment {
+  margin: 0;
+  width: 100%;
+}
+
 .modal-container {
   --background: white;
   --width: 50%;

@@ -1,0 +1,47 @@
+<form [formGroup]="formGroup">
+  <div class="container">
+    <ion-item>
+      <ion-label position="stacked">{{ field.name }}</ion-label>
+      <ion-input type="text" [formControlName]="field.id"></ion-input>
+    </ion-item>
+  </div>
+</form>
+
+<!-- <form [formGroup]="formGroup">
+  <div class="container">
+    <div>
+      <label [for]="field.id" class="field-label">{{ field.name }}</label>
+    </div>
+    <div class="text-input-area p-grid">
+      <div class="p-col-2">
+        Icon1
+      </div>
+      <div class="p-col-8">
+        <input type="text" [ngClass]="{'invalid-state-input': formGroup.get(field.id).invalid && 
+          (formGroup.get(field.id).dirty || formGroup.get(field.id).touched)}" 
+          class="text-input" 
+          [id]="field.id"
+          type="text" 
+          pInputText 
+          [formControlName]="field.id"> 
+      </div>
+      <div class="p-col-2">
+        Icon2
+      </div>
+    </div>
+  </div>
+</form> -->
+<!-- <span class="p-float-label p-input-icon-right full-width">
+  <input type="text" [ngClass]="{'invalid-state-input': formControl.invalid && 
+    (formControl.dirty || formControl.touched)}" 
+    class="text-input" 
+    [id]="field.id"
+    type="text" 
+    pInputText 
+    [formControlName]="field.id"> 
+  <label [for]="field.id" class="field-label">{{ field.name }}</label>
+  <i *ngIf="formControl.value != ''" 
+    (click)="formControl.setValue('')" 
+    class="pi pi-times-circle clear-input-icon">
+  </i>
+</span>  -->

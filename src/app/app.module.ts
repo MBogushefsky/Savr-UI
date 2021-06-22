@@ -53,6 +53,11 @@ import { StepsModule } from 'primeng/steps';
 import { MenuModule } from 'primeng/menu';
 import { AccordionComponent } from './reusable-modules/generic-components/accordion/accordion.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FieldGroupComponent } from './reusable-modules/generic-components/field-group/field-group.component';
+import { InputMaskModule } from 'primeng/inputmask';
+import { TextFieldControlComponent } from './reusable-modules/generic-components/field-group/text-field-control/text-field-control.component';
+import { PasswordFieldControlComponent } from './reusable-modules/generic-components/field-group/password-field-control/password-field-control.component';
+import { PhoneFieldControlComponent } from './reusable-modules/generic-components/field-group/phone-field-control/phone-field-control.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +87,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SecuritySettingsComponent,
     PlaidAccountModalComponent,
     FinancialGoalWizardModalComponent,
-    AccordionComponent
+    AccordionComponent,
+    FieldGroupComponent,
+    TextFieldControlComponent,
+    PasswordFieldControlComponent,
+    PhoneFieldControlComponent
   ],
   entryComponents: [],
   imports: [
@@ -109,7 +118,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     InputTextModule,
     StepsModule,
     MenuModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    InputMaskModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

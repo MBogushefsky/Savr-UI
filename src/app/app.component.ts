@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Globals } from './globals';
 import { User } from './models/user';
@@ -24,7 +25,12 @@ export class AppComponent implements OnInit {
     { title: 'Plan An Event', url: '/event-planning', icon: 'wine', comingSoon: true, section: 0 },      
     { title: 'Settings', url: '/settings', icon: 'settings', section: 1 }
   ];
-  constructor(public router: Router, private storage: Storage, public globals: Globals, private tokenCheckService: TokenCheckService) {
+  constructor(public router: Router, 
+    private storage: Storage, 
+    public globals: Globals, 
+    private tokenCheckService: TokenCheckService,
+    private platform: Platform,
+    private renderer: Renderer2) {
     this.tokenCheck = setInterval(() => {
       this.storage.get('CurrentUser').then((user) => {
         this.tokenCheckService.checkUserAndRedirect(user);
@@ -34,6 +40,13 @@ export class AppComponent implements OnInit {
       this.globals.setCurrentUser(JSON.parse(user));
       this.globals.appLoaded = true;
     });
+    if(this.platform.is('ios') || this.platform.is('android')) {
+      this.globals.isMobileApp = true;
+      this.renderer.addClass(document.body, 'mobile-app-platform')
+    } else {
+      this.globals.isMobileApp = false;
+      this.renderer.addClass(document.body, 'browser-app-platform')
+    }
   }
 
   ngOnInit() {

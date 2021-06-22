@@ -1,0 +1,8 @@
+<form [formGroup]="formGroup">
+  <div class="container">
+    <ion-item>
+      <ion-label position="stacked">{{ field.name }}</ion-label>
+      <ion-input type="tel" [formControlName]="field.id"></ion-input>
+    </ion-item>
+  </div>
+</form>

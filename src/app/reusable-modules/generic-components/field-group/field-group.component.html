@@ -1,0 +1,50 @@
+<form *ngIf="formGroup != null" [formGroup]="formGroup">
+
+  <div *ngFor="let field of fields">
+    <app-text-field-control *ngIf="field.type == 'text' || field.type == 'email'" 
+      [formGroup]="formGroup" 
+      [field]="field">
+    </app-text-field-control>
+    <app-password-field-control *ngIf="field.type == 'password'" 
+      [formGroup]="formGroup" 
+      [field]="field">
+    </app-password-field-control>
+    <app-phone-field-control *ngIf="field.type == 'phone'" 
+      [formGroup]="formGroup" 
+      [field]="field">
+    </app-phone-field-control>
+    <!-- <div class="p-field p-col">
+      <span *ngIf="field.type == 'phone'" class="p-float-label p-input-icon-right full-width">
+        <p-inputMask 
+          [inputId]="field.id"
+          [styleClass]="{'invalid-state-input': formGroup.get(field.id).invalid && 
+            (formGroup.get(field.id).dirty || formGroup.get(field.id).touched)}" 
+          mask="+1 (999) 999-9999" 
+          [formControlName]="field.id">
+        </p-inputMask>
+        <label [for]="field.id" class="field-label">{{ field.name }}</label>
+        <i *ngIf="formGroup.get(field.id).value != ''" 
+          (click)="formGroup.get(field.id).setValue('')" 
+          class="pi pi-times-circle clear-input-icon">
+        </i>
+      </span>
+    </div> -->
+    <!-- <div *ngIf="field.type == 'phone'" class="p-field full-width">
+      <span class="p-float-label">
+        <label [for]="field.id">{{ field.name }}</label>
+        <p-inputMask 
+          [inputId]="field.id"
+          [styleClass]="{'invalid-state-input': formGroup.get(field.id).invalid && 
+            (formGroup.get(field.id).dirty || formGroup.get(field.id).touched)}" 
+          mask="+1 (999) 999-9999" 
+          [placeholder]="field.name" 
+          [formControlName]="field.id">
+        </p-inputMask>
+        <i *ngIf="formGroup.get(field.id).value != ''" 
+            (click)="formGroup.get(field.id).setValue('')" 
+            class="pi pi-times-circle clear-input-icon">
+        </i>
+      </span>
+    </div> -->
+  </div>
+</form>

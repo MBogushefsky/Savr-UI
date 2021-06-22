@@ -3,6 +3,7 @@ import { User } from './models/user';
 
 export class Globals {
   public appLoaded: boolean = false;
+  public isMobileApp: boolean = false;
   public processing: boolean = false;
   private currentUser: User;
   public currentUserData: { [key: string]: any }; 

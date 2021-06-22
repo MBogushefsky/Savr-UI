@@ -1,9 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { Globals } from '../globals';
+import { Field } from '../models/field';
 import { PlaidAccount, PlaidTransaction } from '../models/plaid';
 
 @Injectable({
@@ -14,6 +16,19 @@ export class FoundationService {
     constructor(private globals: Globals, 
         private alertController: AlertController,
         private messageService: MessageService) {}
+
+    fieldsToFormGroup(fields: Field[]) {
+        let formGroup: FormGroup = new FormGroup(this.fieldsToFormControls(fields));
+        return formGroup;
+    }
+
+    fieldsToFormControls(fields: Field[]) {
+        let formControls: { [id: string]: AbstractControl } = {};
+        for (let field of fields) {
+            formControls[field.id] = new FormControl(field.initialValue, field.validators);
+        }
+        return formControls;
+    }
 
     async presentErrorAlert(errorResponse: HttpErrorResponse) {
         let errorHeader = errorResponse.status != null ? errorResponse.status : errorResponse.error;

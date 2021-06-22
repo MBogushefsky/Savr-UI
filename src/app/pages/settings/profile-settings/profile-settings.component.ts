@@ -4,6 +4,8 @@ import { User } from 'src/app/models/user';
 import { FoundationService } from 'src/app/services/foundation.service';
 import { RestApiService } from 'src/app/services/rest-api.service';
 import { Storage } from '@ionic/storage';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Field } from 'src/app/models/field';
 
 @Component({
   selector: 'app-profile-settings',
@@ -14,10 +16,45 @@ export class ProfileSettingsComponent implements OnInit {
 
   profileSettings = Object.assign(this.globals.getCurrentUser(), {});
 
+  fieldControls: Field[];
+
+  profileSettingsFormGroup: FormGroup;
+
   constructor(public globals: Globals, 
     private restApiService: RestApiService, 
     private foundationService: FoundationService,
-    private storage: Storage) { }
+    private storage: Storage) { 
+      this.fieldControls = [
+        { 
+          id: 'firstName', 
+          name: 'First Name', 
+          type: 'text', 
+          initialValue: this.profileSettings.firstName, 
+          validators: [Validators.required]
+        },
+        { 
+          id: 'lastName', 
+          name: 'Last Name', 
+          type: 'text', 
+          initialValue: this.profileSettings.lastName, 
+          validators: [Validators.required]
+        },
+        { 
+          id: 'email', 
+          name: 'Email', 
+          type: 'email', 
+          initialValue: this.profileSettings.email, 
+          validators: [Validators.required, Validators.email]
+        },
+        { 
+          id: 'phoneNumber', 
+          name: 'Phone Number', 
+          type: 'phone', 
+          initialValue: this.profileSettings.phoneNumber, 
+          validators: [Validators.required, Validators.minLength(17), Validators.maxLength(17)]
+        }
+      ];
+  }
 
   ngOnInit() {}
 
